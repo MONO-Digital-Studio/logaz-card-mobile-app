@@ -1,0 +1,9 @@
+
+name: CI/CD Configuration
+
+# This configuration prevents direct modifications to package.json
+skipPackageJsonModification: true
+
+# Use environment variables for API keys instead of hardcoding them
+env:
+  YANDEX_MAPS_API_KEY: ${{ secrets.YANDEX_MAPS_API_KEY }}
