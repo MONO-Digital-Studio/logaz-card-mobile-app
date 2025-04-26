@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Header from '@/components/Header';
 import BottomNavigation from '@/components/BottomNavigation';
@@ -33,7 +32,7 @@ const NotificationsPage: React.FC = () => {
     <div className="min-h-screen bg-logaz-background">
       <Header />
       <main className="p-4 pb-20">
-        <h1 className="text-xl font-semibold mb-4">Уведомления</h1>
+        <h1 className="text-xl font-semibold mb-4">Сообщения</h1>
         <div className="space-y-3">
           {notifications.map((notification) => (
             <div
