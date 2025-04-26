@@ -96,6 +96,14 @@ const RoutesPage: React.FC = () => {
       <main className="p-4">
         <h1 className="text-xl font-medium mb-4">Построение маршрута</h1>
         
+        <div className="h-[400px] bg-gray-100 rounded-lg overflow-hidden relative mb-4">
+          <YandexMap 
+            onStationClick={() => {}}
+            routePoints={routePoints}
+            selectedRouteId={selectedRoute}
+          />
+        </div>
+        
         <div className="bg-white rounded-lg shadow-md p-4 mb-4">
           <div className="flex items-center mb-4">
             <div className="mr-3 flex flex-col items-center">
@@ -175,20 +183,6 @@ const RoutesPage: React.FC = () => {
                   </div>
                 </div>
               ))}
-            </div>
-            
-            <div className="mt-4 h-[400px] bg-gray-100 rounded-lg overflow-hidden relative">
-              {routePoints ? (
-                <YandexMap 
-                  onStationClick={() => {}}
-                  routePoints={routePoints}
-                  selectedRouteId={selectedRoute}
-                />
-              ) : (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <p className="text-gray-500">Загрузка маршрута...</p>
-                </div>
-              )}
             </div>
           </>
         )}
