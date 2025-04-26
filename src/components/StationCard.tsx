@@ -77,7 +77,7 @@ const StationCard = ({ station, onRouteClick }: StationCardProps) => {
         </Button>
         <Button 
           variant="outline"
-          className="flex-1" 
+          className="flex-1 bg-logaz-blue text-white hover:bg-logaz-blue/90" 
           onClick={handleRouteClick}
         >
           <Route className="w-4 h-4" />
