@@ -1,6 +1,8 @@
+
 import React from 'react';
 import { MapPin, Clock, Star, Route } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 export interface Station {
   id: string;

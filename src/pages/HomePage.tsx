@@ -60,7 +60,7 @@ const HomePage: React.FC = () => {
   };
 
   const handleStationClick = (stationId: string) => {
-    navigate(`/map?station=${stationId}`);
+    navigate(`/routes?station=${stationId}`);  // Changed from /map to /routes to prevent 404
   };
 
   return (
@@ -89,7 +89,7 @@ const HomePage: React.FC = () => {
             <Button 
               variant="link" 
               className="text-logaz-blue p-0 h-auto"
-              onClick={() => navigate('/map')}
+              onClick={() => navigate('/routes')}  // Changed from /map to /routes to prevent 404
             >
               Смотреть все
             </Button>

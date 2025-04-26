@@ -1,6 +1,6 @@
 
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Home } from "lucide-react";
@@ -27,9 +27,9 @@ const NotFound = () => {
         Запрошенная страница не существует или была удалена
       </p>
       <Button asChild className="bg-logaz-blue hover:bg-logaz-blue/90">
-        <a href="/">
+        <Link to="/">
           <Home className="mr-2" size={18} /> На главную
-        </a>
+        </Link>
       </Button>
     </div>
   );

@@ -1,5 +1,6 @@
+
 import React, { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import BottomNavigation from '@/components/BottomNavigation';
 import StationCard, { Station } from '@/components/StationCard';
@@ -7,6 +8,7 @@ import { Filter, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const MapPage: React.FC = () => {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const stationIdFromUrl = searchParams.get('station');
   
@@ -71,7 +73,7 @@ const MapPage: React.FC = () => {
   };
 
   const handleRouteClick = (id: string) => {
-    window.location.href = `/routes?station=${id}`;
+    navigate(`/routes?station=${id}`);  // Changed from window.location.href to navigate
   };
 
   const handleDetailsClick = (id: string) => {
