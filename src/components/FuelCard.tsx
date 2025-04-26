@@ -17,6 +17,11 @@ const FuelCard: React.FC<FuelCardProps> = ({
 }) => {
   const formattedCardNumber = cardNumber.replace(/(\d{4})/g, '$1 ').trim();
 
+  const handleQRClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Остановит всплытие события, чтобы не сработал onClick карты
+    onShowQR();
+  };
+
   return (
     <div 
       onClick={onShowQR}
@@ -29,11 +34,17 @@ const FuelCard: React.FC<FuelCardProps> = ({
       </div>
       
       <div className="relative z-10">
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center">
           <div>
             <h3 className="text-sm font-light opacity-90">Топливная карта</h3>
             <p className="text-xl font-medium mt-1">{formattedCardNumber}</p>
           </div>
+          <button 
+            onClick={handleQRClick}
+            className="w-12 h-12 flex items-center justify-center bg-white/20 hover:bg-white/30 rounded-lg transition-colors"
+          >
+            <QrCode size={24} />
+          </button>
         </div>
         
         <div className="mt-4">
