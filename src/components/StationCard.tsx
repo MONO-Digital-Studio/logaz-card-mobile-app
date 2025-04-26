@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { MapPin, Clock, Star, Route } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -17,7 +18,7 @@ export interface Station {
 interface StationCardProps {
   station: Station;
   onRouteClick: (stationId: string) => void;
-  onDetailsClick: (stationId: string) => void;
+  onDetailsClick?: (stationId: string) => void;
 }
 
 const StationCard: React.FC<StationCardProps> = ({
@@ -29,7 +30,11 @@ const StationCard: React.FC<StationCardProps> = ({
 
   const handleDetailsClick = () => {
     setIsModalOpen(true);
-    onDetailsClick(station.id);
+    // Only trigger the parent handler if it exists
+    // This is the key change - making onDetailsClick optional and only calling it if provided
+    if (onDetailsClick) {
+      onDetailsClick(station.id);
+    }
   };
 
   return (

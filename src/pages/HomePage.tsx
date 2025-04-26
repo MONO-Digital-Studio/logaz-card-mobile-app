@@ -59,9 +59,8 @@ const HomePage: React.FC = () => {
     navigate(`/routes?station=${stationId}`);
   };
 
-  const handleStationClick = (stationId: string) => {
-    navigate(`/routes?station=${stationId}`);  // Changed from /map to /routes to prevent 404
-  };
+  // We're removing this function completely as we don't need it anymore
+  // The modal is now being handled inside the StationCard component
 
   return (
     <div className="min-h-screen bg-logaz-background pb-16">
@@ -89,7 +88,7 @@ const HomePage: React.FC = () => {
             <Button 
               variant="link" 
               className="text-logaz-blue p-0 h-auto"
-              onClick={() => navigate('/routes')}  // Changed from /map to /routes to prevent 404
+              onClick={() => navigate('/routes')}
             >
               Смотреть все
             </Button>
@@ -100,7 +99,8 @@ const HomePage: React.FC = () => {
               key={station.id}
               station={station}
               onRouteClick={handleRouteClick}
-              onDetailsClick={handleStationClick}
+              // We're not passing onDetailsClick anymore, so the modal
+              // behavior will be handled inside StationCard
             />
           ))}
         </section>
