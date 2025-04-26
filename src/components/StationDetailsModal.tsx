@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {
   Dialog,
@@ -28,6 +29,11 @@ const StationDetailsModal: React.FC<StationDetailsModalProps> = ({
   const handleRouteClick = () => {
     navigate(`/routes?station=${station.id}`);
     onClose();
+  };
+
+  // Transform fuel types to modify "Пропан-бутан"
+  const transformFuelType = (fuelType: string) => {
+    return fuelType === 'Пропан-бутан' ? 'Пропан' : fuelType;
   };
 
   return (
@@ -61,7 +67,7 @@ const StationDetailsModal: React.FC<StationDetailsModalProps> = ({
               <div className="flex flex-wrap gap-2 mt-1">
                 {station.fuelTypes.map((fuel, index) => (
                   <span key={index} className="bg-gray-100 px-2 py-1 rounded-md text-sm">
-                    {fuel}
+                    {transformFuelType(fuel)}
                   </span>
                 ))}
               </div>
@@ -75,7 +81,7 @@ const StationDetailsModal: React.FC<StationDetailsModalProps> = ({
               <div className="space-y-1 mt-1">
                 {station.fuelTypes.map((fuel, index) => (
                   <div key={index} className="flex justify-between text-sm">
-                    <span>{fuel}</span>
+                    <span>{transformFuelType(fuel)}</span>
                     <span className="font-medium">{(Math.random() * 40 + 20).toFixed(2)} ₽/л</span>
                   </div>
                 ))}
