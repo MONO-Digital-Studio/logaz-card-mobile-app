@@ -99,11 +99,11 @@ const YandexMap = ({
       { id: "3", coords: [55.753, 37.575], type: "МАЗС", fuelTypes: ["Пропан", "АИ-92", "АИ-95", "ДТ"] },
       { id: "4", coords: [55.754, 37.576], type: "АГЗС", fuelTypes: ["Пропан"] },
       { id: "5", coords: [55.755, 37.577], type: "АГНКС", fuelTypes: ["Метан"] }
-    ];
+    ].filter(station => station.type.includes("ЛОГАЗ")); // Filter stations to only show ones with "ЛОГАЗ" in the type
 
-    // Filter stations
+    // Filter stations based on active filters
     const filteredStations = stations.filter(station => {
-      // If no filters are active, show all stations
+      // If no filters are active, show all ЛОГАЗ stations
       if (activeTypeFilters.length === 0 && activeFuelFilters.length === 0) {
         return true;
       }
