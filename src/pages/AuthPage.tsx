@@ -94,6 +94,7 @@ const AuthPage: React.FC = () => {
           onClick={handleTelegramLogin}
           className="w-full bg-logaz-blue text-white"
         >
+          Войти через Telegram
         </Button>
 
         <div className="mt-6 text-center">
