@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -10,10 +9,7 @@ import {
   User, 
   Bell, 
   CreditCard, 
-  Car,
   Route, 
-  Settings, 
-  HelpCircle, 
   LogOut,
   ChevronRight
 } from 'lucide-react';
@@ -83,15 +79,6 @@ const ProfilePage: React.FC = () => {
             <ChevronRight size={18} className="text-gray-400" />
           </div>
           
-          {/* Vehicles */}
-          <div className="p-4 flex justify-between items-center">
-            <div className="flex items-center">
-              <Car size={20} className="mr-3 text-logaz-blue" />
-              <span>Мои автомобили</span>
-            </div>
-            <ChevronRight size={18} className="text-gray-400" />
-          </div>
-          
           {/* Routes History */}
           <div className="p-4 flex justify-between items-center" onClick={() => navigate('/routes')}>
             <div className="flex items-center">
@@ -100,30 +87,15 @@ const ProfilePage: React.FC = () => {
             </div>
             <ChevronRight size={18} className="text-gray-400" />
           </div>
-          
-          {/* App Settings */}
-          <div className="p-4 flex justify-between items-center">
-            <div className="flex items-center">
-              <Settings size={20} className="mr-3 text-logaz-blue" />
-              <span>Настройки приложения</span>
-            </div>
-            <ChevronRight size={18} className="text-gray-400" />
-          </div>
-          
-          {/* Help */}
-          <div className="p-4 flex justify-between items-center">
-            <div className="flex items-center">
-              <HelpCircle size={20} className="mr-3 text-logaz-blue" />
-              <span>Помощь</span>
-            </div>
-            <ChevronRight size={18} className="text-gray-400" />
-          </div>
         </section>
+        
+        {/* Support Phone */}
+        <p className="text-center text-gray-600 my-6">Служба поддержки 8 800 550 8322</p>
         
         {/* Logout Button */}
         <Button 
           variant="outline" 
-          className="w-full mt-6 border-logaz-error text-logaz-error hover:bg-logaz-error/5"
+          className="w-full mt-2 border-logaz-error text-logaz-error hover:bg-logaz-error/5"
           onClick={handleLogout}
         >
           <LogOut size={18} className="mr-2" /> Выйти из аккаунта
@@ -136,4 +108,3 @@ const ProfilePage: React.FC = () => {
 };
 
 export default ProfilePage;
-
