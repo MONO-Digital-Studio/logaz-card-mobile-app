@@ -74,7 +74,6 @@ const YandexMap = ({
   }, [activeTypeFilters, activeFuelFilters, latitude, longitude, isTracking, routePoints, selectedRouteId]);
 
   const initMap = () => {
-    // Координаты Пермского края
     const permRegion = {
       center: [58.01046, 56.229434], // Центр Перми
       bounds: [
@@ -109,7 +108,6 @@ const YandexMap = ({
       mapRef.current.geoObjects.add(userLocation);
     }
 
-    // Draw route if route points are provided
     if (routePoints) {
       const multiRoute = new window.ymaps.multiRouter.MultiRoute({
         referencePoints: [
@@ -130,15 +128,12 @@ const YandexMap = ({
         wayPointFinishIconImageHref: "/lovable-uploads/6c53022f-37e2-4deb-869f-e8fd3d38f577.png",
         wayPointFinishIconImageSize: [32, 32],
         wayPointFinishIconImageOffset: [-16, -16],
-        // Style for active route
         routeActiveStrokeWidth: 8,
         routeActiveStrokeColor: "#FF9E4F",
-        // Style for alternative routes
         routeStrokeWidth: 4,
         routeStrokeColor: "#1E88E5"
       });
       
-      // Handle route selection based on selectedRouteId
       if (selectedRouteId) {
         multiRoute.model.events.add('requestsuccess', function() {
           const routes = multiRoute.getRoutes();
@@ -152,8 +147,6 @@ const YandexMap = ({
       
       mapRef.current.geoObjects.add(multiRoute);
     } else {
-      // If no route points, display stations
-      // Обновленные координаты заправок ЛОГАЗ SV в Пермском крае
       const stations: Station[] = [
         { 
           id: "1", 
@@ -203,10 +196,9 @@ const YandexMap = ({
         return passesTypeFilter && passesFuelFilter;
       });
 
-      // Создание кастомного макета для маркера с использованием загруженного изображения
       const StationIconLayout = window.ymaps.templateLayoutFactory.createClass(
         '<div class="station-marker" style="position: relative; cursor: pointer;">' +
-          '<img src="/lovable-uploads/6c53022f-37e2-4deb-869f-e8fd3d38f577.png" ' +
+          '<img src="/lovable-uploads/b954a2fb-4e63-4313-b6a0-c9eb5c6835ae.png" ' +
           'style="width: 32px; height: 32px; position: relative; z-index: 1;" />' +
           '<div class="station-marker__type" style="position: absolute; bottom: -20px; ' +
           'left: 50%; transform: translateX(-50%); white-space: nowrap; ' +
