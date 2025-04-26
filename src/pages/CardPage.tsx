@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
@@ -6,6 +7,7 @@ import BottomNavigation from '@/components/BottomNavigation';
 import FuelCard from '@/components/FuelCard';
 import QRCodeModal from '@/components/QRCodeModal';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Button } from '@/components/ui/button';
 
 interface Transaction {
   id: string;
@@ -72,6 +74,31 @@ const CardPage: React.FC = () => {
 
   const handleShowQR = () => {
     setQrModalOpen(true);
+  };
+  
+  // Utility functions that were removed but are still used in the component
+  const formatDate = (date: Date) => {
+    return format(date, 'dd MMM yyyy, HH:mm', { locale: ru });
+  };
+
+  const getTransactionStatusClass = (amount: number) => {
+    return amount < 0 
+      ? 'text-red-600' 
+      : 'text-green-600';
+  };
+
+  const getTransactionAmount = (amount: number) => {
+    return `${amount < 0 ? '' : '+'}${amount.toLocaleString()} ₽`;
+  };
+
+  const getTransactionDescription = (transaction: Transaction) => {
+    if (transaction.type === 'fill') {
+      return `Заправка ${transaction.fuelType}, ${transaction.liters} л`;
+    } else if (transaction.type === 'payment') {
+      return 'Пополнение счета';
+    } else {
+      return 'Возврат средств';
+    }
   };
 
   return (
