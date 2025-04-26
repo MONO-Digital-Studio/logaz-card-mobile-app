@@ -1,6 +1,7 @@
 import React from 'react';
 import { MapPin, Clock, Star, Route } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+
 export interface Station {
   id: string;
   name: string;
@@ -11,11 +12,13 @@ export interface Station {
   fuelTypes: string[];
   distance?: string;
 }
+
 interface StationCardProps {
   station: Station;
   onRouteClick: (stationId: string) => void;
   onDetailsClick: (stationId: string) => void;
 }
+
 const StationCard: React.FC<StationCardProps> = ({
   station,
   onRouteClick,
@@ -38,7 +41,7 @@ const StationCard: React.FC<StationCardProps> = ({
             <span>{station.rating.toFixed(1)}</span>
           </div>
         </div>
-        {station.distance && <div className="bg-logaz-blue/10 rounded-full text-sm text-logaz-blue font-medium px-[8px] py-[8px]">
+        {station.distance && <div className="bg-logaz-blue/10 rounded-lg text-sm text-logaz-blue font-medium px-2 py-2 flex items-center justify-center">
             {station.distance}
           </div>}
       </div>
@@ -59,4 +62,5 @@ const StationCard: React.FC<StationCardProps> = ({
       </div>
     </div>;
 };
+
 export default StationCard;
