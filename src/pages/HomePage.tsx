@@ -17,27 +17,37 @@ const HomePage: React.FC = () => {
   const balance = 15750;
   const company = "ООО Транспорт-Сервис";
   
-  // Updated mock data for ЛОГАЗ SV stations
+  // Updated station data from Yandex.Maps
   const recentStations: Station[] = [
     {
       id: "1",
-      name: "ЛОГАЗ SV АГЗС №7",
+      name: "ЛОГАЗ SV АГЗС №1",
       type: "ЛОГАЗ SV АГЗС",
-      address: "ул. Ленина, 123",
-      hours: "24 часа",
-      rating: 4.8,
-      fuelTypes: ["Пропан", "АИ-92", "АИ-95"],
-      distance: "1.2 км"
+      address: "Московская область, Одинцово, Внуковская улица, 9",
+      hours: "Круглосуточно",
+      rating: 4.7,
+      fuelTypes: ["Метан", "Пропан-бутан", "АИ-92", "АИ-95", "ДТ"],
+      distance: "2.1 км"
     },
     {
       id: "2",
-      name: "ЛОГАЗ SV АГНКС",
+      name: "ЛОГАЗ SV АГНКС №5",
       type: "ЛОГАЗ SV АГНКС",
-      address: "ул. Гагарина, 45А",
-      hours: "06:00 - 22:00",
-      rating: 4.5,
-      fuelTypes: ["Метан"],
-      distance: "3.5 км"
+      address: "Московская область, Химки, Вашутинское шоссе, 17Бс1",
+      hours: "Круглосуточно",
+      rating: 4.8,
+      fuelTypes: ["Метан", "Пропан-бутан"],
+      distance: "3.8 км"
+    },
+    {
+      id: "3",
+      name: "ЛОГАЗ SV МАЗС №8",
+      type: "ЛОГАЗ SV МАЗС",
+      address: "Москва, МКАД, 78-й километр, вл1с1",
+      hours: "Круглосуточно",
+      rating: 4.6,
+      fuelTypes: ["Пропан-бутан", "АИ-92", "АИ-95", "АИ-98", "ДТ"],
+      distance: "5.2 км"
     }
   ];
 
