@@ -41,7 +41,7 @@ const StationCard: React.FC<StationCardProps> = ({
             <span>{station.rating.toFixed(1)}</span>
           </div>
         </div>
-        {station.distance && <div className="bg-logaz-blue/10 rounded-lg text-sm text-logaz-blue font-medium px-2 py-2 flex items-center justify-center">
+        {station.distance && <div className="bg-logaz-blue/10 rounded-lg text-sm text-orange-500 font-medium px-2 py-2 flex items-center justify-center text-center">
             {station.distance}
           </div>}
       </div>
