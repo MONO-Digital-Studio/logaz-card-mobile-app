@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Phone } from 'lucide-react';
+import Header from '@/components/Header';
 import BottomNavigation from '@/components/BottomNavigation';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -32,6 +33,7 @@ const ProfilePage: React.FC = () => {
   
   return (
     <div className="min-h-screen bg-logaz-background pb-16">
+      <Header />
       <main className="p-4">
         {/* User Info Section */}
         <section className="bg-white rounded-lg shadow-md p-4 mb-4">

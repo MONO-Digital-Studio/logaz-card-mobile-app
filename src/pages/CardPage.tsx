@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
+import Header from '@/components/Header';
 import BottomNavigation from '@/components/BottomNavigation';
 import FuelCard from '@/components/FuelCard';
 import QRCodeModal from '@/components/QRCodeModal';
@@ -100,6 +101,7 @@ const CardPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-logaz-background pb-16">
+      <Header />
       <main className="p-4">
         <section className="mb-6">
           <FuelCard 
