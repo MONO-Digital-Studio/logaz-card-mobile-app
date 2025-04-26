@@ -1,5 +1,7 @@
 
 import React, { useEffect } from 'react';
+import { useGeolocation } from '@/hooks/useGeolocation';
+import { toast } from 'sonner';
 
 declare global {
   interface Window {
@@ -8,6 +10,14 @@ declare global {
 }
 
 const YandexMap = ({ onStationClick }: { onStationClick?: (id: string) => void }) => {
+  const { latitude, longitude, error, isTracking } = useGeolocation();
+
+  useEffect(() => {
+    if (error) {
+      toast.error('Ошибка получения геолокации: ' + error);
+    }
+  }, [error]);
+
   useEffect(() => {
     // Load Yandex Maps script
     const script = document.createElement('script');
@@ -16,10 +26,21 @@ const YandexMap = ({ onStationClick }: { onStationClick?: (id: string) => void }
     script.onload = () => {
       window.ymaps.ready(() => {
         const map = new window.ymaps.Map('map', {
-          center: [55.751574, 37.573856], // Moscow coordinates
+          center: [latitude || 55.751574, longitude || 37.573856],
           zoom: 11,
           controls: ['zoomControl', 'geolocationControl']
         });
+
+        // Add user location marker if available
+        if (isTracking && latitude && longitude) {
+          const userLocation = new window.ymaps.Placemark([latitude, longitude], {
+            hintContent: 'Ваше местоположение'
+          }, {
+            preset: 'islands#blueCircleDotIcon'
+          });
+          map.geoObjects.add(userLocation);
+          map.setCenter([latitude, longitude]);
+        }
 
         // Добавляем маркеры станций
         const stations = [
@@ -33,7 +54,7 @@ const YandexMap = ({ onStationClick }: { onStationClick?: (id: string) => void }
         stations.forEach(station => {
           const marker = new window.ymaps.Placemark(station.coords, {}, {
             iconLayout: 'default#image',
-            iconImageHref: '/path/to/marker-icon.png', // Замените на реальный путь к иконке
+            iconImageHref: '/path/to/marker-icon.png',
             iconImageSize: [30, 42],
             iconImageOffset: [-15, -42]
           });
@@ -49,10 +70,9 @@ const YandexMap = ({ onStationClick }: { onStationClick?: (id: string) => void }
     document.head.appendChild(script);
 
     return () => {
-      // Cleanup
       document.head.removeChild(script);
     };
-  }, [onStationClick]);
+  }, [onStationClick, latitude, longitude, isTracking]);
 
   return (
     <div id="map" className="w-full h-full" />
