@@ -22,7 +22,7 @@ const HomePage: React.FC = () => {
   const recentStations: Station[] = [
     {
       id: "1",
-      name: "ЛОГАЗ SV АГЗС №24",
+      name: "ЛОГАЗ SV АГЗС",
       type: "ЛОГАЗ SV АГЗС",
       address: "Пермский край, Пермь, шоссе Космонавтов, 316/1",
       hours: "Круглосуточно",
@@ -32,7 +32,7 @@ const HomePage: React.FC = () => {
     },
     {
       id: "2",
-      name: "ЛОГАЗ SV АГЗС №31",
+      name: "ЛОГАЗ SV АГЗС",
       type: "ЛОГАЗ SV АГЗС",
       address: "Пермский край, Пермь, улица Спешилова, 94",
       hours: "Круглосуточно",
@@ -42,7 +42,7 @@ const HomePage: React.FC = () => {
     },
     {
       id: "3",
-      name: "ЛОГАЗ SV АГНКС №12",
+      name: "ЛОГАЗ SV АГНКС",
       type: "ЛОГАЗ SV АГНКС",
       address: "Пермский край, Краснокамск, улица Энтузиастов, 7",
       hours: "Круглосуточно",
