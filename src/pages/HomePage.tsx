@@ -4,8 +4,6 @@ import Header from '@/components/Header';
 import BottomNavigation from '@/components/BottomNavigation';
 import FuelCard from '@/components/FuelCard';
 import QRCodeModal from '@/components/QRCodeModal';
-import { Button } from '@/components/ui/button';
-import { MapPin, Route, CreditCard, Clock } from 'lucide-react';
 import StationCard, { Station } from '@/components/StationCard';
 
 const HomePage: React.FC = () => {
@@ -80,44 +78,6 @@ const HomePage: React.FC = () => {
             onClose={() => setQrModalOpen(false)}
             cardNumber={cardNumber.substring(0, 4) + "..." + cardNumber.substring(cardNumber.length - 4)}
           />
-        </section>
-
-        {/* Quick Actions */}
-        <section className="mb-6">
-          <div className="grid grid-cols-2 gap-3">
-            <Button 
-              variant="outline" 
-              className="flex flex-col items-center justify-center h-24 border-2"
-              onClick={() => navigate('/map')}
-            >
-              <MapPin className="h-6 w-6 mb-2 text-logaz-blue" />
-              <span>Найти АГЗС</span>
-            </Button>
-            <Button 
-              variant="outline" 
-              className="flex flex-col items-center justify-center h-24 border-2"
-              onClick={() => navigate('/routes')}
-            >
-              <Route className="h-6 w-6 mb-2 text-logaz-orange" />
-              <span>Построить маршрут</span>
-            </Button>
-            <Button 
-              variant="outline" 
-              className="flex flex-col items-center justify-center h-24 border-2"
-              onClick={() => navigate('/card')}
-            >
-              <CreditCard className="h-6 w-6 mb-2 text-logaz-blue" />
-              <span>История операций</span>
-            </Button>
-            <Button 
-              variant="outline" 
-              className="flex flex-col items-center justify-center h-24 border-2"
-              onClick={() => navigate('/profile')}
-            >
-              <Clock className="h-6 w-6 mb-2 text-logaz-orange" />
-              <span>Мои маршруты</span>
-            </Button>
-          </div>
         </section>
 
         {/* Recent Stations */}
