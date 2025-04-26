@@ -60,7 +60,6 @@ const HomePage: React.FC = () => {
       <main className="p-4">
         {/* Card Section */}
         <section className="mb-6">
-          <h2 className="text-lg font-medium mb-3">Моя карта</h2>
           <FuelCard 
             cardNumber={cardNumber}
             balance={balance}
@@ -76,7 +75,6 @@ const HomePage: React.FC = () => {
 
         {/* Quick Actions */}
         <section className="mb-6">
-          <h2 className="text-lg font-medium mb-3">Быстрые действия</h2>
           <div className="grid grid-cols-2 gap-3">
             <Button 
               variant="outline" 
@@ -143,3 +141,4 @@ const HomePage: React.FC = () => {
 };
 
 export default HomePage;
+
