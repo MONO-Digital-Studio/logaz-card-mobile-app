@@ -32,6 +32,40 @@ interface YandexMapProps {
   selectedRouteId?: string | null;
 }
 
+// Вынесем список станций за пределы компонента, чтобы он не пересоздавался при каждом рендере
+const stations: Station[] = [
+  { 
+    id: "1", 
+    coords: [57.931068, 56.421594], 
+    type: "ЛОГАЗ SV АГЗС", 
+    fuelTypes: ["Пропан", "АИ-92", "АИ-95"] 
+  },
+  { 
+    id: "2", 
+    coords: [58.010458, 56.229434], 
+    type: "ЛОГАЗ SV АГЗС", 
+    fuelTypes: ["Пропан", "Метан"] 
+  },
+  { 
+    id: "3", 
+    coords: [57.819284, 56.154753], 
+    type: "ЛОГАЗ SV МАЗС", 
+    fuelTypes: ["Пропан", "АИ-92", "АИ-95", "ДТ"] 
+  },
+  { 
+    id: "4", 
+    coords: [58.106291, 56.290592], 
+    type: "ЛОГАЗ SV АГЗС", 
+    fuelTypes: ["Пропан", "Метан"] 
+  },
+  { 
+    id: "5", 
+    coords: [57.988548, 56.203641], 
+    type: "ЛОГАЗ SV АГНКС", 
+    fuelTypes: ["Метан"] 
+  }
+];
+
 const YandexMap = ({ 
   onStationClick, 
   activeTypeFilters = [], 
@@ -42,6 +76,7 @@ const YandexMap = ({
   const mapRef = useRef<any>(null);
   const { latitude, longitude, error, isTracking } = useGeolocation();
   const scriptLoadedRef = useRef<boolean>(false);
+  const stationMarkersRef = useRef<any[]>([]);
   
   useEffect(() => {
     if (error) {
@@ -92,13 +127,21 @@ const YandexMap = ({
     });
     
     mapRef.current = map;
+    
+    // Добавляем обработчик события изменения масштаба карты
+    map.events.add('boundschange', function() {
+      // При изменении масштаба или позиции карты, обновляем маркеры заправок
+      updateStationsVisibility();
+    });
+    
     updateMap();
   };
 
   const updateMap = () => {
     if (!mapRef.current) return;
     
-    mapRef.current.geoObjects.removeAll();
+    // Очищаем только те объекты, которые не являются маркерами заправок
+    clearNonStationObjects();
 
     if (isTracking && latitude && longitude) {
       const userLocation = new window.ymaps.Placemark([latitude, longitude], {
@@ -153,41 +196,44 @@ const YandexMap = ({
     }
   };
 
+  // Метод для очистки всех объектов на карте, кроме маркеров заправок
+  const clearNonStationObjects = () => {
+    if (!mapRef.current) return;
+    
+    // Временно сохраняем маркеры заправок
+    const stationMarkers = [...stationMarkersRef.current];
+    
+    // Удаляем все объекты с карты
+    mapRef.current.geoObjects.removeAll();
+    
+    // Возвращаем маркеры заправок на карту
+    stationMarkers.forEach(marker => {
+      if (marker) {
+        mapRef.current.geoObjects.add(marker);
+      }
+    });
+  };
+
+  // Метод для обновления видимости заправок при масштабировании
+  const updateStationsVisibility = () => {
+    // Очищаем существующие маркеры заправок
+    stationMarkersRef.current.forEach(marker => {
+      if (marker && mapRef.current) {
+        mapRef.current.geoObjects.remove(marker);
+      }
+    });
+    
+    // Сбрасываем массив маркеров
+    stationMarkersRef.current = [];
+    
+    // Добавляем заправки заново
+    addStationsToMap();
+  };
+
   // Выделение функции добавления заправок в отдельный метод
   const addStationsToMap = () => {
-    const stations: Station[] = [
-      { 
-        id: "1", 
-        coords: [57.931068, 56.421594], 
-        type: "ЛОГАЗ SV АГЗС", 
-        fuelTypes: ["Пропан", "АИ-92", "АИ-95"] 
-      },
-      { 
-        id: "2", 
-        coords: [58.010458, 56.229434], 
-        type: "ЛОГАЗ SV АГЗС", 
-        fuelTypes: ["Пропан", "Метан"] 
-      },
-      { 
-        id: "3", 
-        coords: [57.819284, 56.154753], 
-        type: "ЛОГАЗ SV МАЗС", 
-        fuelTypes: ["Пропан", "АИ-92", "АИ-95", "ДТ"] 
-      },
-      { 
-        id: "4", 
-        coords: [58.106291, 56.290592], 
-        type: "ЛОГАЗ SV АГЗС", 
-        fuelTypes: ["Пропан", "Метан"] 
-      },
-      { 
-        id: "5", 
-        coords: [57.988548, 56.203641], 
-        type: "ЛОГАЗ SV АГНКС", 
-        fuelTypes: ["Метан"] 
-      }
-    ];
-
+    if (!mapRef.current) return;
+    
     const logAZStations = stations.filter(station => station.type.includes("ЛОГАЗ SV"));
     
     const filteredStations = logAZStations.filter(station => {
@@ -215,6 +261,9 @@ const YandexMap = ({
       '</div>'
     );
 
+    // Очищаем существующий массив маркеров
+    stationMarkersRef.current = [];
+
     filteredStations.forEach(station => {
       const marker = new window.ymaps.Placemark(station.coords, {
         stationType: station.type,
@@ -229,7 +278,13 @@ const YandexMap = ({
       });
 
       mapRef.current.geoObjects.add(marker);
+      
+      // Сохраняем маркер в массив для последующего использования
+      stationMarkersRef.current.push(marker);
     });
+    
+    // Добавляем лог для отладки
+    console.log(`Added ${stationMarkersRef.current.length} station markers to map`);
   };
 
   return (
