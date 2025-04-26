@@ -2,7 +2,7 @@
 import React from 'react';
 
 interface StationMarkerProps {
-  type: string; // Updated to accept any string for flexibility
+  type: string;
   onClick: () => void;
   isActive?: boolean;
 }
@@ -18,10 +18,15 @@ const StationMarker: React.FC<StationMarkerProps> = ({ type, onClick, isActive =
       className={`cursor-pointer transform transition-transform ${isActive ? 'scale-125 z-20' : 'hover:scale-110'}`}
       onClick={onClick}
     >
-      <div className={`${bgColor} w-6 h-6 rounded-full flex items-center justify-center relative ${isActive ? 'shadow-lg' : 'shadow-sm'}`}>
-        <div className="w-3 h-3 bg-white rounded-full"></div>
+      {/* Using the logo image instead of the circle+dot design */}
+      <div className={`relative ${isActive ? 'shadow-lg' : 'shadow-sm'}`}>
+        <img 
+          src="/lovable-uploads/b954a2fb-4e63-4313-b6a0-c9eb5c6835ae.png" 
+          alt="ЛОГАЗ SV"
+          className={`w-8 h-8 object-contain ${isActive ? 'scale-110' : ''}`}
+        />
         {/* Triangle pointer at bottom */}
-        <div className={`absolute -bottom-2 w-0 h-0 
+        <div className={`absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 
                         border-l-[6px] border-l-transparent 
                         border-r-[6px] border-r-transparent 
                         ${type.includes('АГЗС') 
