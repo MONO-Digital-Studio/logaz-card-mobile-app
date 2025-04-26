@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import Logo from '@/components/Logo';
-import { MessageSquare, Lock, Telegram } from 'lucide-react';
+import { MessageSquare, Lock, MessageCircle } from 'lucide-react';
 
 const AuthPage: React.FC = () => {
   const [phone, setPhone] = useState('');
@@ -96,7 +96,7 @@ const AuthPage: React.FC = () => {
           variant="outline"
           className="w-full"
         >
-          <Telegram className="mr-2 h-5 w-5 text-[#229ED9]" />
+          <MessageCircle className="mr-2 h-5 w-5 text-[#229ED9]" />
           Войти через Telegram
         </Button>
 
