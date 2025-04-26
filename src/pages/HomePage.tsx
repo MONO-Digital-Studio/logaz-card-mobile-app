@@ -45,6 +45,10 @@ const HomePage: React.FC = () => {
     setQrModalOpen(true);
   };
 
+  const handleCardClick = () => {
+    navigate('/card'); // Перенаправляем на страницу с деталями карты
+  };
+
   const handleRouteClick = (stationId: string) => {
     navigate(`/routes?station=${stationId}`);
   };
@@ -65,6 +69,7 @@ const HomePage: React.FC = () => {
             balance={balance}
             company={company}
             onShowQR={handleShowQR}
+            onClick={handleCardClick}
           />
           <QRCodeModal 
             isOpen={qrModalOpen}
@@ -141,4 +146,3 @@ const HomePage: React.FC = () => {
 };
 
 export default HomePage;
-

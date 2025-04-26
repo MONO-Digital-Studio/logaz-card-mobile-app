@@ -7,7 +7,7 @@ interface FuelCardProps {
   balance: number;
   company: string;
   onShowQR: () => void;
-  onClick?: () => void;  // Added optional onClick prop
+  onClick?: () => void;
 }
 
 const FuelCard: React.FC<FuelCardProps> = ({ 
@@ -15,14 +15,19 @@ const FuelCard: React.FC<FuelCardProps> = ({
   balance, 
   company, 
   onShowQR, 
-  onClick  // Added onClick destructuring
+  onClick
 }) => {
   const formattedCardNumber = cardNumber.replace(/(\d{4})/g, '$1 ').trim();
 
+  const handleQRClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Остановит всплытие события, чтобы не сработал onClick карты
+    onShowQR();
+  };
+
   return (
     <div 
-      onClick={onClick}  // Added onClick handler
-      className={`relative bg-gradient-to-r from-logaz-blue to-logaz-blue/80 rounded-xl p-4 text-white shadow-lg cursor-pointer`}  // Added cursor-pointer
+      onClick={onClick}
+      className={`relative bg-gradient-to-r from-logaz-blue to-logaz-blue/80 rounded-xl p-4 text-white shadow-lg cursor-pointer`}
     >
       {/* Card Background Pattern */}
       <div className="absolute inset-0 overflow-hidden">
@@ -37,7 +42,7 @@ const FuelCard: React.FC<FuelCardProps> = ({
             <p className="text-xl font-medium mt-1">{formattedCardNumber}</p>
           </div>
           <button 
-            onClick={onShowQR}
+            onClick={handleQRClick}
             className="w-12 h-12 flex items-center justify-center bg-white/20 hover:bg-white/30 rounded-lg transition-colors"
           >
             <QrCode size={24} />
@@ -59,4 +64,3 @@ const FuelCard: React.FC<FuelCardProps> = ({
 };
 
 export default FuelCard;
-
