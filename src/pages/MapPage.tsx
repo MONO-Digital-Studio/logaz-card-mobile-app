@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -15,6 +16,8 @@ const MapPage: React.FC = () => {
   const [filtersVisible, setFiltersVisible] = useState(false);
   const [activeTypeFilters, setActiveTypeFilters] = useState<string[]>([]);
   const [activeFuelFilters, setActiveFuelFilters] = useState<string[]>([]);
+  const [appliedTypeFilters, setAppliedTypeFilters] = useState<string[]>([]);
+  const [appliedFuelFilters, setAppliedFuelFilters] = useState<string[]>([]);
 
   const stations: Record<string, Station> = {
     "1": {
@@ -102,6 +105,16 @@ const MapPage: React.FC = () => {
     setActiveFuelFilters([]);
   };
 
+  const handleApplyFilters = () => {
+    // Apply selected filters
+    setAppliedTypeFilters([...activeTypeFilters]);
+    setAppliedFuelFilters([...activeFuelFilters]);
+    setFiltersVisible(false);
+    
+    // Clear selected station when applying new filters
+    setSelectedStationId(null);
+  };
+
   const selectedStation = selectedStationId ? stations[selectedStationId] : null;
 
   const fuelFilters = ["Пропан", "Метан", "АИ-92", "АИ-95", "ДТ"];
@@ -113,7 +126,11 @@ const MapPage: React.FC = () => {
       
       <main className="relative h-[calc(100vh-130px)]">
         <div className="h-full">
-          <YandexMap onStationClick={handleStationClick} />
+          <YandexMap 
+            onStationClick={handleStationClick}
+            activeTypeFilters={appliedTypeFilters}
+            activeFuelFilters={appliedFuelFilters}
+          />
         </div>
         
         <Button
@@ -176,6 +193,7 @@ const MapPage: React.FC = () => {
               <Button 
                 className="bg-logaz-blue hover:bg-logaz-blue/90" 
                 size="sm"
+                onClick={handleApplyFilters}
               >
                 Применить
               </Button>
