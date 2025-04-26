@@ -1,9 +1,11 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import BottomNavigation from '@/components/BottomNavigation';
 import FuelCard from '@/components/FuelCard';
 import QRCodeModal from '@/components/QRCodeModal';
+import { Button } from '@/components/ui/button';
 import StationCard, { Station } from '@/components/StationCard';
 
 const HomePage: React.FC = () => {
