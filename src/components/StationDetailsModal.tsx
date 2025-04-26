@@ -1,31 +1,21 @@
-
 import React from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { MapPin, Clock, Info, BadgeRussianRuble } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Station } from './StationCard';
 import { useNavigate } from 'react-router-dom';
-
 interface StationDetailsModalProps {
   station: Station | null;
   isOpen: boolean;
   onClose: () => void;
 }
-
 const StationDetailsModal: React.FC<StationDetailsModalProps> = ({
   station,
   isOpen,
   onClose
 }) => {
   const navigate = useNavigate();
-
   if (!station) return null;
-
   const handleRouteClick = () => {
     navigate(`/routes?station=${station.id}`);
     onClose();
@@ -35,9 +25,7 @@ const StationDetailsModal: React.FC<StationDetailsModalProps> = ({
   const transformFuelType = (fuelType: string) => {
     return fuelType === 'Пропан-бутан' ? 'Пропан' : fuelType;
   };
-
-  return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+  return <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold">{station.name}</DialogTitle>
@@ -65,11 +53,9 @@ const StationDetailsModal: React.FC<StationDetailsModalProps> = ({
             <div>
               <div className="font-medium text-sm text-gray-700">Виды топлива</div>
               <div className="flex flex-wrap gap-2 mt-1">
-                {station.fuelTypes.map((fuel, index) => (
-                  <span key={index} className="bg-gray-100 px-2 py-1 rounded-md text-sm">
+                {station.fuelTypes.map((fuel, index) => <span key={index} className="bg-gray-100 px-2 py-1 rounded-md text-sm">
                     {transformFuelType(fuel)}
-                  </span>
-                ))}
+                  </span>)}
               </div>
             </div>
           </div>
@@ -79,28 +65,21 @@ const StationDetailsModal: React.FC<StationDetailsModalProps> = ({
             <div>
               <div className="font-medium text-sm text-gray-700">Цены на топливо</div>
               <div className="space-y-1 mt-1">
-                {station.fuelTypes.map((fuel, index) => (
-                  <div key={index} className="flex justify-between text-sm">
+                {station.fuelTypes.map((fuel, index) => <div key={index} className="flex justify-between text-sm">
                     <span>{transformFuelType(fuel)}</span>
-                    <span className="font-medium">{(Math.random() * 40 + 20).toFixed(2)} ₽/л</span>
-                  </div>
-                ))}
+                    <span className="font-medium px-[41px]">{(Math.random() * 40 + 20).toFixed(2)} ₽/л</span>
+                  </div>)}
               </div>
             </div>
           </div>
         </div>
 
         <div className="mt-4">
-          <Button 
-            className="w-full bg-logaz-blue hover:bg-logaz-blue/90"
-            onClick={handleRouteClick}
-          >
+          <Button className="w-full bg-logaz-blue hover:bg-logaz-blue/90" onClick={handleRouteClick}>
             Маршрут
           </Button>
         </div>
       </DialogContent>
-    </Dialog>
-  );
+    </Dialog>;
 };
-
 export default StationDetailsModal;
