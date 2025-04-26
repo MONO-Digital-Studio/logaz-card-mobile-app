@@ -11,7 +11,6 @@ interface QRCodeModalProps {
 }
 
 const QRCodeModal: React.FC<QRCodeModalProps> = ({ isOpen, onClose, cardNumber }) => {
-  // For now we'll just show a placeholder for the QR code
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="sm:max-w-md">
@@ -28,7 +27,7 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({ isOpen, onClose, cardNumber }
             </div>
           </div>
         </div>
-        <div className="flex justify-end">
+        <div className="flex justify-center"> {/* Changed from justify-end to justify-center */}
           <Button onClick={onClose} className="bg-logaz-blue hover:bg-logaz-blue/90">
             Закрыть <X size={16} className="ml-1" />
           </Button>
