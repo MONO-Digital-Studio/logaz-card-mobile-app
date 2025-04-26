@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Header from '@/components/Header';
 import BottomNavigation from '@/components/BottomNavigation';
@@ -7,12 +7,18 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { MapPin, CornerDownLeft, ChevronRight, Clock, Navigation2 } from 'lucide-react';
 import { toast } from 'sonner';
+import YandexMap from '@/components/YandexMap';
 
 interface RouteOption {
   id: string;
   duration: number; // minutes
   distance: number; // kilometers
   stations: number; // number of ЛОГАЗ stations on the route
+}
+
+interface RoutePoint {
+  coords: [number, number];
+  name: string;
 }
 
 const RoutesPage: React.FC = () => {
@@ -22,6 +28,8 @@ const RoutesPage: React.FC = () => {
   const [startPoint, setStartPoint] = useState<string>('Текущее местоположение');
   const [endPoint, setEndPoint] = useState<string>(stationIdFromUrl ? 'АГЗС №7' : '');
   const [routeCalculated, setRouteCalculated] = useState<boolean>(!!stationIdFromUrl);
+  const [selectedRoute, setSelectedRoute] = useState<string | null>(null);
+  const [routePoints, setRoutePoints] = useState<{start: RoutePoint; end: RoutePoint} | null>(null);
   
   // Mock route options
   const routeOptions: RouteOption[] = [
@@ -44,6 +52,22 @@ const RoutesPage: React.FC = () => {
       stations: 3,
     },
   ];
+
+  // Initialize route points when route is calculated with mock data for Perm region
+  useEffect(() => {
+    if (routeCalculated) {
+      setRoutePoints({
+        start: {
+          coords: [58.010458, 56.229434], // Center of Perm
+          name: startPoint
+        },
+        end: {
+          coords: [57.931068, 56.421594], // ЛОГАЗ SV station coordinates
+          name: endPoint
+        }
+      });
+    }
+  }, [routeCalculated, startPoint, endPoint]);
   
   const formatDuration = (minutes: number) => {
     const hours = Math.floor(minutes / 60);
@@ -65,8 +89,8 @@ const RoutesPage: React.FC = () => {
   };
   
   const handleStartRoute = (routeId: string) => {
+    setSelectedRoute(routeId);
     toast.success('Навигация запущена');
-    // Here would be the logic to start navigation
   };
 
   return (
@@ -159,11 +183,19 @@ const RoutesPage: React.FC = () => {
               ))}
             </div>
             
-            {/* Map Placeholder */}
+            {/* Replace placeholder with actual YandexMap */}
             <div className="mt-4 h-60 bg-gray-200 rounded-lg overflow-hidden relative">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <p className="text-gray-500">Карта с маршрутом</p>
-              </div>
+              {routePoints ? (
+                <YandexMap 
+                  onStationClick={() => {}}
+                  routePoints={routePoints}
+                  selectedRouteId={selectedRoute}
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <p className="text-gray-500">Загрузка маршрута...</p>
+                </div>
+              )}
             </div>
           </>
         )}

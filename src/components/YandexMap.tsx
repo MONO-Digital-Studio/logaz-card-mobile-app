@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { toast } from 'sonner';
@@ -16,16 +15,28 @@ interface Station {
   fuelTypes: string[];
 }
 
+interface RoutePoint {
+  coords: [number, number];
+  name: string;
+}
+
 interface YandexMapProps {
   onStationClick?: (id: string) => void;
   activeTypeFilters?: string[];
   activeFuelFilters?: string[];
+  routePoints?: {
+    start: RoutePoint;
+    end: RoutePoint;
+  };
+  selectedRouteId?: string | null;
 }
 
 const YandexMap = ({ 
   onStationClick, 
   activeTypeFilters = [], 
-  activeFuelFilters = [] 
+  activeFuelFilters = [],
+  routePoints,
+  selectedRouteId
 }: YandexMapProps) => {
   const mapRef = useRef<any>(null);
   const { latitude, longitude, error, isTracking } = useGeolocation();
@@ -60,7 +71,7 @@ const YandexMap = ({
     if (scriptLoadedRef.current && window.ymaps && window.ymaps.ready) {
       updateMap();
     }
-  }, [activeTypeFilters, activeFuelFilters, latitude, longitude, isTracking]);
+  }, [activeTypeFilters, activeFuelFilters, latitude, longitude, isTracking, routePoints, selectedRouteId]);
 
   const initMap = () => {
     // Координаты Пермского края
@@ -98,85 +109,130 @@ const YandexMap = ({
       mapRef.current.geoObjects.add(userLocation);
     }
 
-    // Обновленные координаты заправок ЛОГАЗ SV в Пермском крае
-    const stations: Station[] = [
-      { 
-        id: "1", 
-        coords: [57.931068, 56.421594], 
-        type: "ЛОГАЗ SV АГЗС", 
-        fuelTypes: ["Пропан", "АИ-92", "АИ-95"] 
-      },
-      { 
-        id: "2", 
-        coords: [58.010458, 56.229434], 
-        type: "ЛОГАЗ SV АГЗС", 
-        fuelTypes: ["Пропан", "Метан"] 
-      },
-      { 
-        id: "3", 
-        coords: [57.819284, 56.154753], 
-        type: "ЛОГАЗ SV МАЗС", 
-        fuelTypes: ["Пропан", "АИ-92", "АИ-95", "ДТ"] 
-      },
-      { 
-        id: "4", 
-        coords: [58.106291, 56.290592], 
-        type: "ЛОГАЗ SV АГЗС", 
-        fuelTypes: ["Пропан", "Метан"] 
-      },
-      { 
-        id: "5", 
-        coords: [57.988548, 56.203641], 
-        type: "ЛОГАЗ SV АГНКС", 
-        fuelTypes: ["Метан"] 
-      }
-    ];
-
-    const logAZStations = stations.filter(station => station.type.includes("ЛОГАЗ SV"));
-    
-    const filteredStations = logAZStations.filter(station => {
-      if (activeTypeFilters.length === 0 && activeFuelFilters.length === 0) {
-        return true;
-      }
-
-      const passesTypeFilter = activeTypeFilters.length === 0 || 
-                              activeTypeFilters.includes(station.type);
-      
-      const passesFuelFilter = activeFuelFilters.length === 0 || 
-                              station.fuelTypes.some(fuel => activeFuelFilters.includes(fuel));
-      
-      return passesTypeFilter && passesFuelFilter;
-    });
-
-    // Создание кастомного макета для маркера с использованием загруженного изображения
-    const StationIconLayout = window.ymaps.templateLayoutFactory.createClass(
-      '<div class="station-marker" style="position: relative; cursor: pointer;">' +
-        '<img src="/lovable-uploads/6c53022f-37e2-4deb-869f-e8fd3d38f577.png" ' +
-        'style="width: 32px; height: 32px; position: relative; z-index: 1;" />' +
-        '<div class="station-marker__type" style="position: absolute; bottom: -20px; ' +
-        'left: 50%; transform: translateX(-50%); white-space: nowrap; ' +
-        'background: white; padding: 2px 6px; border-radius: 4px; ' +
-        'font-size: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">' +
-        '{{ properties.stationType }}' +
-        '</div>' +
-      '</div>'
-    );
-
-    filteredStations.forEach(station => {
-      const marker = new window.ymaps.Placemark(station.coords, {
-        stationType: station.type,
-        hintContent: station.type
+    // Draw route if route points are provided
+    if (routePoints) {
+      const multiRoute = new window.ymaps.multiRouter.MultiRoute({
+        referencePoints: [
+          routePoints.start.coords,
+          routePoints.end.coords
+        ],
+        params: {
+          routingMode: 'auto',
+          results: 3
+        }
       }, {
-        iconLayout: StationIconLayout,
-        iconOffset: [-16, -16]
+        boundsAutoApply: true,
+        wayPointStartIconLayout: "default#image",
+        wayPointStartIconImageHref: "/lovable-uploads/6c53022f-37e2-4deb-869f-e8fd3d38f577.png",
+        wayPointStartIconImageSize: [32, 32],
+        wayPointStartIconImageOffset: [-16, -16],
+        wayPointFinishIconLayout: "default#image",
+        wayPointFinishIconImageHref: "/lovable-uploads/6c53022f-37e2-4deb-869f-e8fd3d38f577.png",
+        wayPointFinishIconImageSize: [32, 32],
+        wayPointFinishIconImageOffset: [-16, -16],
+        // Style for active route
+        routeActiveStrokeWidth: 8,
+        routeActiveStrokeColor: "#FF9E4F",
+        // Style for alternative routes
+        routeStrokeWidth: 4,
+        routeStrokeColor: "#1E88E5"
+      });
+      
+      // Handle route selection based on selectedRouteId
+      if (selectedRouteId) {
+        multiRoute.model.events.add('requestsuccess', function() {
+          const routes = multiRoute.getRoutes();
+          const selectedIndex = parseInt(selectedRouteId) - 1;
+          
+          if (routes[selectedIndex]) {
+            multiRoute.setActiveRoute(routes[selectedIndex]);
+          }
+        });
+      }
+      
+      mapRef.current.geoObjects.add(multiRoute);
+    } else {
+      // If no route points, display stations
+      // Обновленные координаты заправок ЛОГАЗ SV в Пермском крае
+      const stations: Station[] = [
+        { 
+          id: "1", 
+          coords: [57.931068, 56.421594], 
+          type: "ЛОГАЗ SV АГЗС", 
+          fuelTypes: ["Пропан", "АИ-92", "АИ-95"] 
+        },
+        { 
+          id: "2", 
+          coords: [58.010458, 56.229434], 
+          type: "ЛОГАЗ SV АГЗС", 
+          fuelTypes: ["Пропан", "Метан"] 
+        },
+        { 
+          id: "3", 
+          coords: [57.819284, 56.154753], 
+          type: "ЛОГАЗ SV МАЗС", 
+          fuelTypes: ["Пропан", "АИ-92", "АИ-95", "ДТ"] 
+        },
+        { 
+          id: "4", 
+          coords: [58.106291, 56.290592], 
+          type: "ЛОГАЗ SV АГЗС", 
+          fuelTypes: ["Пропан", "Метан"] 
+        },
+        { 
+          id: "5", 
+          coords: [57.988548, 56.203641], 
+          type: "ЛОГАЗ SV АГНКС", 
+          fuelTypes: ["Метан"] 
+        }
+      ];
+
+      const logAZStations = stations.filter(station => station.type.includes("ЛОГАЗ SV"));
+      
+      const filteredStations = logAZStations.filter(station => {
+        if (activeTypeFilters.length === 0 && activeFuelFilters.length === 0) {
+          return true;
+        }
+
+        const passesTypeFilter = activeTypeFilters.length === 0 || 
+                                activeTypeFilters.includes(station.type);
+        
+        const passesFuelFilter = activeFuelFilters.length === 0 || 
+                                station.fuelTypes.some(fuel => activeFuelFilters.includes(fuel));
+        
+        return passesTypeFilter && passesFuelFilter;
       });
 
-      marker.events.add('click', () => {
-        onStationClick && onStationClick(station.id);
-      });
+      // Создание кастомного макета для маркера с использованием загруженного изображения
+      const StationIconLayout = window.ymaps.templateLayoutFactory.createClass(
+        '<div class="station-marker" style="position: relative; cursor: pointer;">' +
+          '<img src="/lovable-uploads/6c53022f-37e2-4deb-869f-e8fd3d38f577.png" ' +
+          'style="width: 32px; height: 32px; position: relative; z-index: 1;" />' +
+          '<div class="station-marker__type" style="position: absolute; bottom: -20px; ' +
+          'left: 50%; transform: translateX(-50%); white-space: nowrap; ' +
+          'background: white; padding: 2px 6px; border-radius: 4px; ' +
+          'font-size: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">' +
+          '{{ properties.stationType }}' +
+          '</div>' +
+        '</div>'
+      );
 
-      mapRef.current.geoObjects.add(marker);
-    });
+      filteredStations.forEach(station => {
+        const marker = new window.ymaps.Placemark(station.coords, {
+          stationType: station.type,
+          hintContent: station.type
+        }, {
+          iconLayout: StationIconLayout,
+          iconOffset: [-16, -16]
+        });
+
+        marker.events.add('click', () => {
+          onStationClick && onStationClick(station.id);
+        });
+
+        mapRef.current.geoObjects.add(marker);
+      });
+    }
   };
 
   return (
