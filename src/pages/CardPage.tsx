@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
@@ -25,7 +24,6 @@ const CardPage: React.FC = () => {
   const [qrModalOpen, setQrModalOpen] = useState(false);
   const [isCardLocked, setIsCardLocked] = useState(false);
   
-  // Mock data
   const cardNumber = "5678 1234 9012 3456";
   const balance = 15750;
   const company = "ООО Транспорт-Сервис";
@@ -81,10 +79,11 @@ const CardPage: React.FC = () => {
   };
 
   const toggleCardLock = () => {
-    setIsCardLocked(!isCardLocked);
-    toast.success(isCardLocked 
-      ? 'Карта успешно разблокирована' 
-      : 'Карта успешно заблокирована'
+    const newLockedState = !isCardLocked;
+    setIsCardLocked(newLockedState);
+    toast.success(newLockedState 
+      ? 'Карта успешно заблокирована' 
+      : 'Карта успешно разблокирована'
     );
   };
 
@@ -117,7 +116,6 @@ const CardPage: React.FC = () => {
       <Header />
       
       <main className="p-4">
-        {/* Card Section */}
         <section className="mb-6">
           <FuelCard 
             cardNumber={cardNumber}
@@ -131,25 +129,20 @@ const CardPage: React.FC = () => {
             cardNumber={cardNumber.substring(0, 4) + "..." + cardNumber.substring(cardNumber.length - 4)}
           />
           
-          <div className="mt-4 flex justify-between gap-4">
-            <Button 
-              className={`flex-1 ${isCardLocked 
-                ? 'bg-logaz-orange hover:bg-logaz-orange/90' 
-                : 'bg-logaz-blue hover:bg-logaz-blue/90'}`}
+          <div className="mt-4 flex items-center">
+            <div 
+              className={`flex-1 p-3 rounded-lg text-center ${isCardLocked 
+                ? 'bg-logaz-orange/10 text-logaz-orange' 
+                : 'bg-logaz-blue/10 text-logaz-blue'}`}
               onClick={toggleCardLock}
             >
               {isCardLocked 
-                ? <><Unlock size={18} className="mr-2" /> Разблокировать</>
-                : <><Lock size={18} className="mr-2" /> Блокировать</>
-              }
-            </Button>
-            <Button variant="outline" className="flex-1">
-              <Info size={18} className="mr-2" /> Подробности
-            </Button>
+                ? 'Разблокировать карту' 
+                : 'Заблокировать карту'}
+            </div>
           </div>
         </section>
 
-        {/* Transactions Section */}
         <section>
           <Tabs defaultValue="history" className="w-full">
             <TabsList className="w-full mb-4">
