@@ -1,7 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import Header from '@/components/Header';
 import BottomNavigation from '@/components/BottomNavigation';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -95,8 +93,6 @@ const RoutesPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-logaz-background pb-16">
-      <Header />
-      
       <main className="p-4">
         <h1 className="text-xl font-medium mb-4">Построение маршрута</h1>
         
