@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   Dialog,
@@ -6,8 +5,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { MapPin, Clock, Info, DollarSign } from "lucide-react";
+import { MapPin, Clock, Info, BadgeRussianRuble } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Station } from './StationCard';
+import { useNavigate } from 'react-router-dom';
 
 interface StationDetailsModalProps {
   station: Station | null;
@@ -20,7 +21,14 @@ const StationDetailsModal: React.FC<StationDetailsModalProps> = ({
   isOpen,
   onClose
 }) => {
+  const navigate = useNavigate();
+
   if (!station) return null;
+
+  const handleRouteClick = () => {
+    navigate(`/routes?station=${station.id}`);
+    onClose();
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -61,7 +69,7 @@ const StationDetailsModal: React.FC<StationDetailsModalProps> = ({
           </div>
 
           <div className="flex items-start gap-2">
-            <DollarSign className="w-5 h-5 text-gray-500 mt-0.5" />
+            <BadgeRussianRuble className="w-5 h-5 text-gray-500 mt-0.5" />
             <div>
               <div className="font-medium text-sm text-gray-700">Цены на топливо</div>
               <div className="space-y-1 mt-1">
@@ -74,6 +82,15 @@ const StationDetailsModal: React.FC<StationDetailsModalProps> = ({
               </div>
             </div>
           </div>
+        </div>
+
+        <div className="mt-4">
+          <Button 
+            className="w-full bg-logaz-blue hover:bg-logaz-blue/90"
+            onClick={handleRouteClick}
+          >
+            Маршрут
+          </Button>
         </div>
       </DialogContent>
     </Dialog>
