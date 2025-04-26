@@ -94,8 +94,6 @@ const RoutesPage: React.FC = () => {
     <div className="min-h-screen bg-logaz-background pb-16">
       <Header />
       <main className="p-4">
-        <h1 className="text-xl font-medium mb-4">Построение маршрута</h1>
-        
         <div className="h-[400px] bg-gray-100 rounded-lg overflow-hidden relative mb-4">
           <YandexMap 
             onStationClick={() => {}}
