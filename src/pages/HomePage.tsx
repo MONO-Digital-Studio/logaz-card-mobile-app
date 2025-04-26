@@ -1,7 +1,5 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '@/components/Header';
 import BottomNavigation from '@/components/BottomNavigation';
 import FuelCard from '@/components/FuelCard';
 import QRCodeModal from '@/components/QRCodeModal';
@@ -66,8 +64,6 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-logaz-background pb-16">
-      <Header />
-      
       <main className="p-4">
         {/* Card Section */}
         <section className="mb-6">

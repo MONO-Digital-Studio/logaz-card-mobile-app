@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import Header from '@/components/Header';
 import BottomNavigation from '@/components/BottomNavigation';
 import YandexMap from '@/components/YandexMap';
 import StationCard, { Station } from '@/components/StationCard';
@@ -119,8 +118,6 @@ const MapPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-logaz-background">
-      <Header />
-      
       <main className="relative h-[calc(100vh-130px)]">
         <div className="h-full">
           <YandexMap 
