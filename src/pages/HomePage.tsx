@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -59,9 +58,6 @@ const HomePage: React.FC = () => {
     navigate(`/routes?station=${stationId}`);
   };
 
-  // We're removing this function completely as we don't need it anymore
-  // The modal is now being handled inside the StationCard component
-
   return (
     <div className="min-h-screen bg-logaz-background pb-16">
       <Header />
@@ -99,8 +95,6 @@ const HomePage: React.FC = () => {
               key={station.id}
               station={station}
               onRouteClick={handleRouteClick}
-              // We're not passing onDetailsClick anymore, so the modal
-              // behavior will be handled inside StationCard
             />
           ))}
         </section>

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import BottomNavigation from '@/components/BottomNavigation';
-import StationCard, { Station } from '@/components/StationCard';
+import StationCard, { Station } from '@/components/StationCard'; // Correct import with Station interface
 import { Filter, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 

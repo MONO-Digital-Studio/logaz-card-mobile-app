@@ -4,11 +4,13 @@ import { MapPin, Clock, Info, BadgeRussianRuble } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Station } from './StationCard';
 import { useNavigate } from 'react-router-dom';
+
 interface StationDetailsModalProps {
   station: Station | null;
   isOpen: boolean;
   onClose: () => void;
 }
+
 const StationDetailsModal: React.FC<StationDetailsModalProps> = ({
   station,
   isOpen,
@@ -21,7 +23,6 @@ const StationDetailsModal: React.FC<StationDetailsModalProps> = ({
     onClose();
   };
 
-  // Transform fuel types to modify "Пропан-бутан"
   const transformFuelType = (fuelType: string) => {
     return fuelType === 'Пропан-бутан' ? 'Пропан' : fuelType;
   };
@@ -82,4 +83,5 @@ const StationDetailsModal: React.FC<StationDetailsModalProps> = ({
       </DialogContent>
     </Dialog>;
 };
+
 export default StationDetailsModal;

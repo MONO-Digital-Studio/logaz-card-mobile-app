@@ -1,10 +1,27 @@
+
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { MapPin, Clock } from "lucide-react";
 import StationDetailsModal from './StationDetailsModal';
-import { Station } from './StationCard';
 
-const StationCard = ({ station }: { station: Station }) => {
+// Export the Station interface for use in other components
+export interface Station {
+  id: string;
+  name: string;
+  type: string;
+  address: string;
+  hours: string;
+  rating: number;
+  fuelTypes: string[];
+  distance?: string;
+}
+
+interface StationCardProps {
+  station: Station;
+  onRouteClick?: (stationId: string) => void; // Make this optional
+}
+
+const StationCard = ({ station, onRouteClick }: StationCardProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleDetailsClick = () => {
