@@ -17,11 +17,12 @@ const HomePage: React.FC = () => {
   const balance = 15750;
   const company = "ООО Транспорт-Сервис";
   
+  // Updated mock data for ЛОГАЗ SV stations
   const recentStations: Station[] = [
     {
       id: "1",
-      name: "АГЗС №7",
-      type: "АГЗС",
+      name: "ЛОГАЗ SV АГЗС №7",
+      type: "ЛОГАЗ SV АГЗС",
       address: "ул. Ленина, 123",
       hours: "24 часа",
       rating: 4.8,
@@ -30,8 +31,8 @@ const HomePage: React.FC = () => {
     },
     {
       id: "2",
-      name: "АГНКС Метан",
-      type: "АГНКС",
+      name: "ЛОГАЗ SV АГНКС",
+      type: "ЛОГАЗ SV АГНКС",
       address: "ул. Гагарина, 45А",
       hours: "06:00 - 22:00",
       rating: 4.5,

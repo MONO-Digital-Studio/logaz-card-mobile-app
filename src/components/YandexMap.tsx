@@ -37,10 +37,8 @@ const YandexMap = ({
   }, [error]);
 
   useEffect(() => {
-    // Avoid loading the script multiple times
     if (scriptLoadedRef.current) return;
     
-    // Load Yandex Maps script
     const script = document.createElement('script');
     script.src = 'https://api-maps.yandex.ru/2.1/?apikey=589e2c90-1f8a-4740-a5c3-8a3423c9897c&lang=ru_RU';
     script.async = true;
@@ -77,10 +75,8 @@ const YandexMap = ({
   const updateMap = () => {
     if (!mapRef.current) return;
     
-    // Clear existing map objects
     mapRef.current.geoObjects.removeAll();
 
-    // Add user location marker if available
     if (isTracking && latitude && longitude) {
       const userLocation = new window.ymaps.Placemark([latitude, longitude], {
         hintContent: 'Ваше местоположение'
@@ -91,37 +87,55 @@ const YandexMap = ({
       mapRef.current.setCenter([latitude, longitude]);
     }
 
-    // Добавляем маркеры станций - explicitly typing each array as a tuple [number, number]
     const stations: Station[] = [
-      { id: "1", coords: [55.751574, 37.573856] as [number, number], type: "АГЗС", fuelTypes: ["Пропан", "АИ-92", "АИ-95"] },
-      { id: "2", coords: [55.752, 37.574] as [number, number], type: "АГНКС", fuelTypes: ["Метан"] },
-      { id: "3", coords: [55.753, 37.575] as [number, number], type: "МАЗС", fuelTypes: ["Пропан", "АИ-92", "АИ-95", "ДТ"] },
-      { id: "4", coords: [55.754, 37.576] as [number, number], type: "АГЗС", fuelTypes: ["Пропан"] },
-      { id: "5", coords: [55.755, 37.577] as [number, number], type: "АГНКС", fuelTypes: ["Метан"] }
+      { 
+        id: "1", 
+        coords: [55.751574, 37.573856] as [number, number], 
+        type: "ЛОГАЗ SV АГЗС", 
+        fuelTypes: ["Пропан", "АИ-92", "АИ-95"] 
+      },
+      { 
+        id: "2", 
+        coords: [55.762, 37.584] as [number, number], 
+        type: "ЛОГАЗ SV АГЗС", 
+        fuelTypes: ["Пропан", "Метан"] 
+      },
+      { 
+        id: "3", 
+        coords: [55.743, 37.565] as [number, number], 
+        type: "ЛОГАЗ SV МАЗС", 
+        fuelTypes: ["Пропан", "АИ-92", "АИ-95", "ДТ"] 
+      },
+      { 
+        id: "4", 
+        coords: [55.734, 37.556] as [number, number], 
+        type: "ЛОГАЗ SV АГЗС", 
+        fuelTypes: ["Пропан", "Метан"] 
+      },
+      { 
+        id: "5", 
+        coords: [55.725, 37.547] as [number, number], 
+        type: "ЛОГАЗ SV АГНКС", 
+        fuelTypes: ["Метан"] 
+      }
     ];
 
-    // Filter stations to only show ones with "ЛОГАЗ" in the type
-    const logAZStations = stations.filter(station => station.type.includes("ЛОГАЗ"));
+    const logAZStations = stations.filter(station => station.type.includes("ЛОГАЗ SV"));
     
-    // Filter stations based on active filters
     const filteredStations = logAZStations.filter(station => {
-      // If no filters are active, show all ЛОГАЗ stations
       if (activeTypeFilters.length === 0 && activeFuelFilters.length === 0) {
         return true;
       }
 
-      // Check type filter
       const passesTypeFilter = activeTypeFilters.length === 0 || 
                               activeTypeFilters.includes(station.type);
       
-      // Check fuel filter
       const passesFuelFilter = activeFuelFilters.length === 0 || 
                               station.fuelTypes.some(fuel => activeFuelFilters.includes(fuel));
       
       return passesTypeFilter && passesFuelFilter;
     });
 
-    // Add filtered stations to map
     filteredStations.forEach(station => {
       const marker = new window.ymaps.Placemark(station.coords, {
         hintContent: station.type
