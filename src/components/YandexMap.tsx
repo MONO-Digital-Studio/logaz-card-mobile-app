@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { toast } from 'sonner';
@@ -92,17 +91,20 @@ const YandexMap = ({
       mapRef.current.setCenter([latitude, longitude]);
     }
 
-    // Добавляем маркеры станций
+    // Добавляем маркеры станций - explicitly typing each array as a tuple [number, number]
     const stations: Station[] = [
-      { id: "1", coords: [55.751574, 37.573856], type: "АГЗС", fuelTypes: ["Пропан", "АИ-92", "АИ-95"] },
-      { id: "2", coords: [55.752, 37.574], type: "АГНКС", fuelTypes: ["Метан"] },
-      { id: "3", coords: [55.753, 37.575], type: "МАЗС", fuelTypes: ["Пропан", "АИ-92", "АИ-95", "ДТ"] },
-      { id: "4", coords: [55.754, 37.576], type: "АГЗС", fuelTypes: ["Пропан"] },
-      { id: "5", coords: [55.755, 37.577], type: "АГНКС", fuelTypes: ["Метан"] }
-    ].filter(station => station.type.includes("ЛОГАЗ")); // Filter stations to only show ones with "ЛОГАЗ" in the type
+      { id: "1", coords: [55.751574, 37.573856] as [number, number], type: "АГЗС", fuelTypes: ["Пропан", "АИ-92", "АИ-95"] },
+      { id: "2", coords: [55.752, 37.574] as [number, number], type: "АГНКС", fuelTypes: ["Метан"] },
+      { id: "3", coords: [55.753, 37.575] as [number, number], type: "МАЗС", fuelTypes: ["Пропан", "АИ-92", "АИ-95", "ДТ"] },
+      { id: "4", coords: [55.754, 37.576] as [number, number], type: "АГЗС", fuelTypes: ["Пропан"] },
+      { id: "5", coords: [55.755, 37.577] as [number, number], type: "АГНКС", fuelTypes: ["Метан"] }
+    ];
 
+    // Filter stations to only show ones with "ЛОГАЗ" in the type
+    const logAZStations = stations.filter(station => station.type.includes("ЛОГАЗ"));
+    
     // Filter stations based on active filters
-    const filteredStations = stations.filter(station => {
+    const filteredStations = logAZStations.filter(station => {
       // If no filters are active, show all ЛОГАЗ stations
       if (activeTypeFilters.length === 0 && activeFuelFilters.length === 0) {
         return true;
