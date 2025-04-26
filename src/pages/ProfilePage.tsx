@@ -26,7 +26,6 @@ const ProfilePage: React.FC = () => {
   const userData = {
     name: 'Иванов Иван',
     company: 'ООО Транспорт-Сервис',
-    email: 'ivanov@example.com',
     phone: '+7 (900) 123-45-67',
   };
   
@@ -54,23 +53,12 @@ const ProfilePage: React.FC = () => {
           
           <Separator className="my-4" />
           
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <p className="text-xs text-gray-500">Email</p>
-              <p className="text-sm">{userData.email}</p>
-            </div>
+          <div className="grid grid-cols-1 gap-4">
             <div>
               <p className="text-xs text-gray-500">Телефон</p>
               <p className="text-sm">{userData.phone}</p>
             </div>
           </div>
-          
-          <Button 
-            variant="outline" 
-            className="w-full mt-4 border-logaz-blue text-logaz-blue hover:bg-logaz-blue/5"
-          >
-            Редактировать профиль
-          </Button>
         </section>
         
         {/* Settings Sections */}
@@ -148,3 +136,4 @@ const ProfilePage: React.FC = () => {
 };
 
 export default ProfilePage;
+
