@@ -11,8 +11,8 @@ declare global {
 
 interface Station {
   id: string;
-  coords: [number, number]; // This is a tuple type with exactly 2 numbers
-  type: string; // Updated to accept any string for flexibility
+  coords: [number, number];
+  type: string;
   fuelTypes: string[];
 }
 
@@ -63,10 +63,21 @@ const YandexMap = ({
   }, [activeTypeFilters, activeFuelFilters, latitude, longitude, isTracking]);
 
   const initMap = () => {
+    // Координаты Пермского края
+    const permRegion = {
+      center: [58.01046, 56.229434], // Центр Перми
+      bounds: [
+        [58.897277, 53.803711], // Северо-западный угол
+        [56.138088, 59.231663]  // Юго-восточный угол
+      ],
+      zoom: 8
+    };
+
     const map = new window.ymaps.Map('map', {
-      center: [latitude || 55.751574, longitude || 37.573856],
-      zoom: 11,
-      controls: ['zoomControl', 'geolocationControl']
+      center: permRegion.center,
+      zoom: permRegion.zoom,
+      controls: ['zoomControl', 'geolocationControl'],
+      restrictMapArea: permRegion.bounds
     });
     
     mapRef.current = map;
@@ -85,37 +96,37 @@ const YandexMap = ({
         preset: 'islands#blueCircleDotIcon'
       });
       mapRef.current.geoObjects.add(userLocation);
-      mapRef.current.setCenter([latitude, longitude]);
     }
 
+    // Обновленные координаты заправок ЛОГАЗ SV в Пермском крае
     const stations: Station[] = [
       { 
         id: "1", 
-        coords: [55.751574, 37.573856] as [number, number], 
+        coords: [57.931068, 56.421594], 
         type: "ЛОГАЗ SV АГЗС", 
         fuelTypes: ["Пропан", "АИ-92", "АИ-95"] 
       },
       { 
         id: "2", 
-        coords: [55.762, 37.584] as [number, number], 
+        coords: [58.010458, 56.229434], 
         type: "ЛОГАЗ SV АГЗС", 
         fuelTypes: ["Пропан", "Метан"] 
       },
       { 
         id: "3", 
-        coords: [55.743, 37.565] as [number, number], 
+        coords: [57.819284, 56.154753], 
         type: "ЛОГАЗ SV МАЗС", 
         fuelTypes: ["Пропан", "АИ-92", "АИ-95", "ДТ"] 
       },
       { 
         id: "4", 
-        coords: [55.734, 37.556] as [number, number], 
+        coords: [58.106291, 56.290592], 
         type: "ЛОГАЗ SV АГЗС", 
         fuelTypes: ["Пропан", "Метан"] 
       },
       { 
         id: "5", 
-        coords: [55.725, 37.547] as [number, number], 
+        coords: [57.988548, 56.203641], 
         type: "ЛОГАЗ SV АГНКС", 
         fuelTypes: ["Метан"] 
       }
@@ -137,14 +148,27 @@ const YandexMap = ({
       return passesTypeFilter && passesFuelFilter;
     });
 
+    // Создание кастомного макета для маркера с использованием загруженного изображения
+    const StationIconLayout = window.ymaps.templateLayoutFactory.createClass(
+      '<div class="station-marker" style="position: relative; cursor: pointer;">' +
+        '<img src="/lovable-uploads/6c53022f-37e2-4deb-869f-e8fd3d38f577.png" ' +
+        'style="width: 32px; height: 32px; position: relative; z-index: 1;" />' +
+        '<div class="station-marker__type" style="position: absolute; bottom: -20px; ' +
+        'left: 50%; transform: translateX(-50%); white-space: nowrap; ' +
+        'background: white; padding: 2px 6px; border-radius: 4px; ' +
+        'font-size: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">' +
+        '{{ properties.stationType }}' +
+        '</div>' +
+      '</div>'
+    );
+
     filteredStations.forEach(station => {
       const marker = new window.ymaps.Placemark(station.coords, {
+        stationType: station.type,
         hintContent: station.type
       }, {
-        iconLayout: 'default#image',
-        iconImageHref: `/marker-${station.type.toLowerCase()}.png`,
-        iconImageSize: [30, 42],
-        iconImageOffset: [-15, -42]
+        iconLayout: StationIconLayout,
+        iconOffset: [-16, -16]
       });
 
       marker.events.add('click', () => {
