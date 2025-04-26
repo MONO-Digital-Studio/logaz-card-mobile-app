@@ -1,73 +1,94 @@
-# Welcome to your Lovable project
 
-## Project info
+# ЛОГАЗ SV - Мобильное приложение для АЗС
 
-**URL**: https://lovable.dev/projects/f4621ab4-f2fc-410c-9cee-2343cf562f00
+<div align="center">
+  <img src="/lovable-uploads/d649b731-5ecb-4621-8f85-15b26f4ac5ec.png" alt="ЛОГАЗ SV Logo" width="200"/>
+</div>
 
-## How can I edit this code?
+## 📱 О проекте
 
-There are several ways of editing your application.
+ЛОГАЗ SV - это современное веб-приложение для сети автозаправочных станций, разработанное для улучшения взаимодействия клиентов с сервисами АЗС. Приложение предоставляет удобный интерфейс для управления топливными картами, поиска ближайших АЗС и получения актуальных уведомлений.
 
-**Use Lovable**
+## ⚡ Основные возможности
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/f4621ab4-f2fc-410c-9cee-2343cf562f00) and start prompting.
+- 🗺️ Интерактивная карта АЗС с отображением:
+  - АГЗС (Автогазозаправочные станции)
+  - АГНКС (Автомобильные газонаполнительные компрессорные станции)
+  - МАЗС (Многотопливные автозаправочные станции)
+- 💳 Управление топливными картами:
+  - Просмотр баланса
+  - QR-код для оплаты на АЗС
+  - Защита от несанкционированного копирования QR-кодов
+- 📍 Навигация до ближайших АЗС
+- 🔔 Система уведомлений о новостях и акциях
+- 👤 Личный кабинет пользователя
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🛠️ Технологический стек
 
-**Use your preferred IDE**
+- **Frontend Framework:** React 18 с TypeScript
+- **Build Tool:** Vite
+- **Styling:** Tailwind CSS
+- **UI Components:** shadcn/ui
+- **Routing:** React Router DOM
+- **Icons:** Lucide React
+- **Charts:** Recharts
+- **State Management:** TanStack Query (React Query)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🎨 Дизайн
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Приложение использует фирменные цвета и стили ЛОГАЗ SV:
+- Основной синий: `#3B55a2`
+- Оранжевый акцент: `#FB8607`
+- Фоновый цвет: `#F5F5F5`
 
-Follow these steps:
+## 📦 Установка и запуск
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+```bash
+# Клонирование репозитория
+git clone <repository-url>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Переход в директорию проекта
+cd logaz-sv-app
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Установка зависимостей
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Запуск в режиме разработки
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## 🔧 Структура проекта
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```
+src/
+├── components/    # UI компоненты
+├── pages/        # Страницы приложения
+├── hooks/        # Пользовательские хуки
+├── lib/          # Утилиты и вспомогательные функции
+└── main.tsx      # Точка входа приложения
+```
 
-**Use GitHub Codespaces**
+## 🔐 Безопасность
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- Защита QR-кодов от скриншотов и копирования
+- Безопасная аутентификация пользователей
+- Защита конфиденциальных данных клиентов
 
-## What technologies are used for this project?
+## 📱 Поддерживаемые устройства
 
-This project is built with:
+Приложение адаптировано для:
+- 📱 Мобильных устройств (iOS, Android)
+- 💻 Планшетов
+- 🖥️ Десктопных браузеров
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 🤝 Вклад в проект
 
-## How can I deploy this project?
+Мы приветствуем вклад в развитие проекта! Если вы хотите помочь:
+1. Форкните репозиторий
+2. Создайте ветку для ваших изменений
+3. Отправьте пулл-реквест
 
-Simply open [Lovable](https://lovable.dev/projects/f4621ab4-f2fc-410c-9cee-2343cf562f00) and click on Share -> Publish.
+## 📄 Лицензия
 
-## Can I connect a custom domain to my Lovable project?
+Copyright © 2025 ЛОГАЗ SV. Все права защищены.
 
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
