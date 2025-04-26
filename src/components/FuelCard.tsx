@@ -7,13 +7,23 @@ interface FuelCardProps {
   balance: number;
   company: string;
   onShowQR: () => void;
+  onClick?: () => void;  // Added optional onClick prop
 }
 
-const FuelCard: React.FC<FuelCardProps> = ({ cardNumber, balance, company, onShowQR }) => {
+const FuelCard: React.FC<FuelCardProps> = ({ 
+  cardNumber, 
+  balance, 
+  company, 
+  onShowQR, 
+  onClick  // Added onClick destructuring
+}) => {
   const formattedCardNumber = cardNumber.replace(/(\d{4})/g, '$1 ').trim();
 
   return (
-    <div className="relative bg-gradient-to-r from-logaz-blue to-logaz-blue/80 rounded-xl p-4 text-white shadow-lg">
+    <div 
+      onClick={onClick}  // Added onClick handler
+      className={`relative bg-gradient-to-r from-logaz-blue to-logaz-blue/80 rounded-xl p-4 text-white shadow-lg cursor-pointer`}  // Added cursor-pointer
+    >
       {/* Card Background Pattern */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute inset-y-0 -right-6 w-1/2 bg-white opacity-10 transform rotate-12 rounded-full"></div>
@@ -49,3 +59,4 @@ const FuelCard: React.FC<FuelCardProps> = ({ cardNumber, balance, company, onSho
 };
 
 export default FuelCard;
+
