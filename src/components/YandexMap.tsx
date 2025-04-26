@@ -198,12 +198,8 @@ const YandexMap = ({
       });
 
       // Используем загруженный логотип для маркеров
-      let iconImageHref = "/lovable-uploads/b954a2fb-4e63-4313-b6a0-c9eb5c6835ae.png";
-      
-      // Для нового логотипа, если он был загружен
-      if ('/lovable-uploads/e6bd32ed-570a-4a7c-b047-61bfe55a5b8d.png') {
-        iconImageHref = '/lovable-uploads/e6bd32ed-570a-4a7c-b047-61bfe55a5b8d.png';
-      }
+      // Основной логотип
+      const iconImageHref = "/lovable-uploads/e6bd32ed-570a-4a7c-b047-61bfe55a5b8d.png";
       
       // Создаем шаблон без текстовой подписи, только с иконкой
       const StationIconLayout = window.ymaps.templateLayoutFactory.createClass(
