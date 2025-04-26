@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -17,37 +18,37 @@ const HomePage: React.FC = () => {
   const balance = 15750;
   const company = "ООО Транспорт-Сервис";
   
-  // Updated station data from Yandex.Maps
+  // Updated station data for Perm region from Yandex.Maps
   const recentStations: Station[] = [
     {
       id: "1",
-      name: "ЛОГАЗ SV АГЗС №1",
+      name: "ЛОГАЗ SV АГЗС №24",
       type: "ЛОГАЗ SV АГЗС",
-      address: "Московская область, Одинцово, Внуковская улица, 9",
+      address: "Пермский край, Пермь, шоссе Космонавтов, 316/1",
       hours: "Круглосуточно",
-      rating: 4.7,
-      fuelTypes: ["Метан", "Пропан-бутан", "АИ-92", "АИ-95", "ДТ"],
-      distance: "2.1 км"
+      rating: 4.8,
+      fuelTypes: ["Метан", "Пропан-бутан", "АИ-92", "АИ-95"],
+      distance: "2.3 км"
     },
     {
       id: "2",
-      name: "ЛОГАЗ SV АГНКС №5",
-      type: "ЛОГАЗ SV АГНКС",
-      address: "Московская область, Химки, Вашутинское шоссе, 17Бс1",
+      name: "ЛОГАЗ SV АГЗС №31",
+      type: "ЛОГАЗ SV АГЗС",
+      address: "Пермский край, Пермь, улица Спешилова, 94",
       hours: "Круглосуточно",
-      rating: 4.8,
-      fuelTypes: ["Метан", "Пропан-бутан"],
-      distance: "3.8 км"
+      rating: 4.7,
+      fuelTypes: ["Пропан-бутан", "АИ-92", "АИ-95", "ДТ"],
+      distance: "4.1 км"
     },
     {
       id: "3",
-      name: "ЛОГАЗ SV МАЗС №8",
-      type: "ЛОГАЗ SV МАЗС",
-      address: "Москва, МКАД, 78-й километр, вл1с1",
+      name: "ЛОГАЗ SV АГНКС №12",
+      type: "ЛОГАЗ SV АГНКС",
+      address: "Пермский край, Краснокамск, улица Энтузиастов, 7",
       hours: "Круглосуточно",
       rating: 4.6,
-      fuelTypes: ["Пропан-бутан", "АИ-92", "АИ-95", "АИ-98", "ДТ"],
-      distance: "5.2 км"
+      fuelTypes: ["Метан", "Пропан-бутан"],
+      distance: "6.8 км"
     }
   ];
 
