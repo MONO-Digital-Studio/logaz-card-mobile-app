@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
@@ -76,7 +75,6 @@ const CardPage: React.FC = () => {
     setQrModalOpen(true);
   };
   
-  // Utility functions that were removed but are still used in the component
   const formatDate = (date: Date) => {
     return format(date, 'dd MMM yyyy, HH:mm', { locale: ru });
   };
@@ -125,7 +123,6 @@ const CardPage: React.FC = () => {
             <TabsList className="w-full mb-4">
               <TabsTrigger value="history" className="flex-1">История</TabsTrigger>
               <TabsTrigger value="limits" className="flex-1">Лимиты</TabsTrigger>
-              <TabsTrigger value="settings" className="flex-1">Настройки</TabsTrigger>
             </TabsList>
             
             <TabsContent value="history">
@@ -179,34 +176,6 @@ const CardPage: React.FC = () => {
               <Button className="w-full bg-logaz-blue hover:bg-logaz-blue/90 mt-4">
                 Запросить изменение лимитов
               </Button>
-            </TabsContent>
-            
-            <TabsContent value="settings">
-              <h2 className="text-lg font-medium mb-4">Настройки карты</h2>
-              
-              <div className="bg-white rounded-lg shadow-sm divide-y divide-gray-100">
-                <div className="p-4">
-                  <h3 className="font-medium">Уведомления об операциях</h3>
-                  <p className="text-sm text-gray-600 mt-1">Получать уведомления о всех операциях по карте</p>
-                  <div className="mt-2">
-                    <Button variant="outline" className="mr-2 bg-logaz-blue/5">SMS</Button>
-                    <Button variant="outline" className="mr-2 bg-logaz-blue/5">Email</Button>
-                    <Button variant="outline" className="bg-logaz-orange/10">Push</Button>
-                  </div>
-                </div>
-                
-                <div className="p-4">
-                  <h3 className="font-medium">Отображение в приложении</h3>
-                  <p className="text-sm text-gray-600 mt-1">Настройте как отображается карта в приложении</p>
-                  <Button variant="outline" className="mt-2">Изменить название карты</Button>
-                </div>
-                
-                <div className="p-4">
-                  <h3 className="font-medium text-red-600">Опасная зона</h3>
-                  <p className="text-sm text-gray-600 mt-1">Безвозвратное удаление карты из приложения</p>
-                  <Button variant="destructive" className="mt-2">Удалить карту</Button>
-                </div>
-              </div>
             </TabsContent>
           </Tabs>
         </section>
