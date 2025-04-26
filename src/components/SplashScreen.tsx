@@ -5,7 +5,7 @@ const SplashScreen = () => {
   return <div className="min-h-screen flex flex-col items-center justify-center bg-logaz-background">
       <div className="text-center space-y-6">
         <Logo className="h-20 mb-4 mx-auto" />
-        <p className="text-gray-600 text-lg text-center">Виртаульные топливные 
+        <p className="text-gray-600 text-lg text-center py-0 px-[10px]">Виртаульные топливные 
 карты для бизнеса</p>
         <Loader className="w-8 h-8 mx-auto text-logaz-blue animate-spin" />
       </div>
