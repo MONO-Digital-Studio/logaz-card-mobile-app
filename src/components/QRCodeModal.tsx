@@ -21,13 +21,15 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({ isOpen, onClose, cardNumber }
           </DialogDescription>
         </DialogHeader>
         <div className="flex items-center justify-center p-4">
-          <div className="w-64 h-64 bg-gray-200 flex items-center justify-center">
-            <div className="w-48 h-48 border-2 border-logaz-blue p-4 flex items-center justify-center">
-              <p className="text-center text-sm">QR код для карты {cardNumber}</p>
-            </div>
+          <div className="w-64 h-64 bg-white flex items-center justify-center">
+            <img 
+              src="/lovable-uploads/c1c479e3-8881-4535-a7c6-6ed725f6e8ac.png"
+              alt="QR код для оплаты"
+              className="w-48 h-48 object-contain"
+            />
           </div>
         </div>
-        <div className="flex justify-center"> {/* Changed from justify-end to justify-center */}
+        <div className="flex justify-center">
           <Button onClick={onClose} className="bg-logaz-blue hover:bg-logaz-blue/90">
             Закрыть <X size={16} className="ml-1" />
           </Button>
