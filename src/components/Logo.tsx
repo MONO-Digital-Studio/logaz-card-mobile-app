@@ -3,14 +3,11 @@ import React from 'react';
 
 const Logo: React.FC<{ className?: string }> = ({ className = '' }) => {
   return (
-    <div className={`flex items-center ${className}`}>
-      <div className="bg-logaz-blue p-2 rounded-lg">
-        <span className="text-white font-bold">ЛОГАЗ</span>
-      </div>
-      <div className="bg-logaz-orange p-2 rounded-lg ml-1">
-        <span className="text-white font-bold">SV</span>
-      </div>
-    </div>
+    <img 
+      src="/lovable-uploads/ecd3454b-43cb-4182-b8d1-31af6b7d62b8.png" 
+      alt="ЛОГАЗ SV" 
+      className={`h-full ${className}`}
+    />
   );
 };
 
