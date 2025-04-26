@@ -10,9 +10,9 @@ import YandexMap from '@/components/YandexMap';
 
 interface RouteOption {
   id: string;
-  duration: number; // minutes
-  distance: number; // kilometers
-  stations: number; // number of ЛОГАЗ stations on the route
+  duration: number;
+  distance: number;
+  stations: number;
 }
 
 interface RoutePoint {
@@ -29,8 +29,7 @@ const RoutesPage: React.FC = () => {
   const [routeCalculated, setRouteCalculated] = useState<boolean>(!!stationIdFromUrl);
   const [selectedRoute, setSelectedRoute] = useState<string | null>(null);
   const [routePoints, setRoutePoints] = useState<{start: RoutePoint; end: RoutePoint} | null>(null);
-  
-  // Mock route options
+
   const routeOptions: RouteOption[] = [
     {
       id: '1',
@@ -52,16 +51,15 @@ const RoutesPage: React.FC = () => {
     },
   ];
 
-  // Initialize route points when route is calculated with mock data for Perm region
   useEffect(() => {
     if (routeCalculated) {
       setRoutePoints({
         start: {
-          coords: [58.010458, 56.229434], // Center of Perm
+          coords: [58.010458, 56.229434],
           name: startPoint
         },
         end: {
-          coords: [57.931068, 56.421594], // ЛОГАЗ SV station coordinates
+          coords: [57.931068, 56.421594],
           name: endPoint
         }
       });
@@ -98,7 +96,6 @@ const RoutesPage: React.FC = () => {
       <main className="p-4">
         <h1 className="text-xl font-medium mb-4">Построение маршрута</h1>
         
-        {/* Route Inputs */}
         <div className="bg-white rounded-lg shadow-md p-4 mb-4">
           <div className="flex items-center mb-4">
             <div className="mr-3 flex flex-col items-center">
@@ -146,7 +143,6 @@ const RoutesPage: React.FC = () => {
           </Button>
         </div>
         
-        {/* Route Options */}
         {routeCalculated && (
           <>
             <h2 className="font-medium text-lg mb-3">Варианты маршрута</h2>
@@ -181,8 +177,7 @@ const RoutesPage: React.FC = () => {
               ))}
             </div>
             
-            {/* Replace placeholder with actual YandexMap */}
-            <div className="mt-4 h-60 bg-gray-200 rounded-lg overflow-hidden relative">
+            <div className="mt-4 h-[400px] bg-gray-100 rounded-lg overflow-hidden relative">
               {routePoints ? (
                 <YandexMap 
                   onStationClick={() => {}}

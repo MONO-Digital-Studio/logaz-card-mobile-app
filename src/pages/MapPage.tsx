@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Header from '@/components/Header';
 import BottomNavigation from '@/components/BottomNavigation';
-import YandexMap from '@/components/YandexMap';
 import StationCard, { Station } from '@/components/StationCard';
 import { Filter, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -71,10 +70,6 @@ const MapPage: React.FC = () => {
     }
   };
 
-  const handleStationClick = (id: string) => {
-    setSelectedStationId(id);
-  };
-
   const handleRouteClick = (id: string) => {
     window.location.href = `/routes?station=${id}`;
   };
@@ -120,94 +115,11 @@ const MapPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-logaz-background">
       <Header />
-      <main className="relative h-[calc(100vh-130px)]">
-        <div className="h-full">
-          <YandexMap 
-            onStationClick={handleStationClick}
-            activeTypeFilters={appliedTypeFilters}
-            activeFuelFilters={appliedFuelFilters}
-          />
-        </div>
-        
-        <Button
-          className={`absolute top-4 right-4 shadow-md transition-colors ${
-            filtersVisible 
-              ? 'bg-logaz-blue text-white hover:bg-logaz-blue/90' 
-              : 'bg-white text-logaz-text hover:bg-logaz-blue hover:text-white'
-          }`}
-          onClick={() => setFiltersVisible(!filtersVisible)}
-        >
-          {filtersVisible ? <X size={18} /> : <Filter size={18} />}
-          {!filtersVisible && <span className="ml-2">Фильтры</span>}
-        </Button>
-        
-        {filtersVisible && (
-          <div className="absolute top-16 right-4 bg-white rounded-lg shadow-lg p-4 w-64 animate-fade-in">
-            <h3 className="font-medium mb-2">Тип станции</h3>
-            <div className="flex flex-wrap gap-2 mb-4">
-              {stationTypeFilters.map(filter => (
-                <button 
-                  key={filter}
-                  onClick={() => handleTypeFilterClick(filter)}
-                  className={`px-3 py-1 rounded-full border transition-colors ${
-                    activeTypeFilters.includes(filter)
-                      ? 'border-logaz-blue bg-logaz-blue/10 text-logaz-blue'
-                      : 'border-gray-300 hover:border-logaz-blue hover:bg-logaz-blue/10'
-                  }`}
-                >
-                  {filter}
-                </button>
-              ))}
-            </div>
-            
-            <h3 className="font-medium mb-2">Тип топлива</h3>
-            <div className="flex flex-wrap gap-2">
-              {fuelFilters.map(filter => (
-                <button 
-                  key={filter}
-                  onClick={() => handleFuelFilterClick(filter)}
-                  className={`px-3 py-1 rounded-full border transition-colors ${
-                    activeFuelFilters.includes(filter)
-                      ? 'border-logaz-orange bg-logaz-orange/10 text-logaz-orange'
-                      : 'border-gray-300 hover:border-logaz-orange hover:bg-logaz-orange/10'
-                  }`}
-                >
-                  {filter}
-                </button>
-              ))}
-            </div>
-            
-            <div className="mt-4 flex justify-between">
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={handleResetFilters}
-                className="hover:bg-gray-100"
-              >
-                Сбросить
-              </Button>
-              <Button 
-                className="bg-logaz-blue hover:bg-logaz-blue/90" 
-                size="sm"
-                onClick={handleApplyFilters}
-              >
-                Применить
-              </Button>
-            </div>
-          </div>
-        )}
-        
-        {selectedStation && (
-          <div className="absolute bottom-0 left-0 right-0 p-4 pb-20">
-            <StationCard
-              station={selectedStation}
-              onRouteClick={handleRouteClick}
-              onDetailsClick={handleDetailsClick}
-            />
-          </div>
-        )}
+      <main className="relative h-[calc(100vh-130px)] flex items-center justify-center">
+        <p className="text-center text-gray-500">
+          Карта перемещена на страницу "Маршруты"
+        </p>
       </main>
-      
       <BottomNavigation />
     </div>
   );
