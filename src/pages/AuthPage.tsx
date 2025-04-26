@@ -1,11 +1,10 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import Logo from '@/components/Logo';
-import { MessageSquare, Lock, MessageCircle } from 'lucide-react';
+import { MessageSquare, Lock } from 'lucide-react';
 
 const AuthPage: React.FC = () => {
   const [phone, setPhone] = useState('');
@@ -93,10 +92,8 @@ const AuthPage: React.FC = () => {
 
         <Button
           onClick={handleTelegramLogin}
-          variant="outline"
-          className="w-full"
+          className="w-full bg-logaz-blue text-white"
         >
-          <MessageCircle className="mr-2 h-5 w-5 text-[#229ED9]" />
           Войти через Telegram
         </Button>
 
