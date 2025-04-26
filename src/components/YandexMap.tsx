@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { toast } from 'sonner';
@@ -196,23 +197,26 @@ const YandexMap = ({
         return passesTypeFilter && passesFuelFilter;
       });
 
+      // Используем загруженный логотип для маркеров
+      let iconImageHref = "/lovable-uploads/b954a2fb-4e63-4313-b6a0-c9eb5c6835ae.png";
+      
+      // Для нового логотипа, если он был загружен
+      if ('/lovable-uploads/e6bd32ed-570a-4a7c-b047-61bfe55a5b8d.png') {
+        iconImageHref = '/lovable-uploads/e6bd32ed-570a-4a7c-b047-61bfe55a5b8d.png';
+      }
+      
+      // Создаем шаблон без текстовой подписи, только с иконкой
       const StationIconLayout = window.ymaps.templateLayoutFactory.createClass(
         '<div class="station-marker" style="position: relative; cursor: pointer;">' +
-          '<img src="/lovable-uploads/b954a2fb-4e63-4313-b6a0-c9eb5c6835ae.png" ' +
+          '<img src="' + iconImageHref + '" ' +
           'style="width: 32px; height: 32px; position: relative; z-index: 1;" />' +
-          '<div class="station-marker__type" style="position: absolute; bottom: -20px; ' +
-          'left: 50%; transform: translateX(-50%); white-space: nowrap; ' +
-          'background: white; padding: 2px 6px; border-radius: 4px; ' +
-          'font-size: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">' +
-          '{{ properties.stationType }}' +
-          '</div>' +
         '</div>'
       );
 
       filteredStations.forEach(station => {
         const marker = new window.ymaps.Placemark(station.coords, {
           stationType: station.type,
-          hintContent: station.type
+          hintContent: station.type // Сохраняем подсказку при наведении
         }, {
           iconLayout: StationIconLayout,
           iconOffset: [-16, -16]
