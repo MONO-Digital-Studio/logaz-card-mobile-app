@@ -1,0 +1,250 @@
+
+import React, { useState } from 'react';
+import { format } from 'date-fns';
+import { ru } from 'date-fns/locale';
+import Header from '@/components/Header';
+import BottomNavigation from '@/components/BottomNavigation';
+import FuelCard from '@/components/FuelCard';
+import QRCodeModal from '@/components/QRCodeModal';
+import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Lock, Unlock, Info } from 'lucide-react';
+import { toast } from "sonner";
+
+interface Transaction {
+  id: string;
+  date: Date;
+  amount: number;
+  type: 'fill' | 'payment' | 'refund';
+  station: string;
+  fuelType?: string;
+  liters?: number;
+}
+
+const CardPage: React.FC = () => {
+  const [qrModalOpen, setQrModalOpen] = useState(false);
+  const [isCardLocked, setIsCardLocked] = useState(false);
+  
+  // Mock data
+  const cardNumber = "5678 1234 9012 3456";
+  const balance = 15750;
+  const company = "ООО Транспорт-Сервис";
+  
+  const transactions: Transaction[] = [
+    {
+      id: '1',
+      date: new Date(2023, 3, 15, 14, 30),
+      amount: -750,
+      type: 'fill',
+      station: 'АГЗС №7',
+      fuelType: 'Пропан',
+      liters: 15
+    },
+    {
+      id: '2',
+      date: new Date(2023, 3, 12, 9, 45),
+      amount: -1200,
+      type: 'fill',
+      station: 'МАЗС №12',
+      fuelType: 'АИ-95',
+      liters: 20
+    },
+    {
+      id: '3',
+      date: new Date(2023, 3, 10, 18, 15),
+      amount: -600,
+      type: 'fill',
+      station: 'АГЗС №3',
+      fuelType: 'Пропан',
+      liters: 12
+    },
+    {
+      id: '4',
+      date: new Date(2023, 3, 8, 11, 0),
+      amount: 5000,
+      type: 'payment',
+      station: '-'
+    },
+    {
+      id: '5',
+      date: new Date(2023, 3, 5, 16, 30),
+      amount: -950,
+      type: 'fill',
+      station: 'АГНКС Метан',
+      fuelType: 'Метан',
+      liters: 19
+    }
+  ];
+
+  const handleShowQR = () => {
+    setQrModalOpen(true);
+  };
+
+  const toggleCardLock = () => {
+    setIsCardLocked(!isCardLocked);
+    toast.success(isCardLocked 
+      ? 'Карта успешно разблокирована' 
+      : 'Карта успешно заблокирована'
+    );
+  };
+
+  const formatDate = (date: Date) => {
+    return format(date, 'dd MMM yyyy, HH:mm', { locale: ru });
+  };
+
+  const getTransactionStatusClass = (amount: number) => {
+    return amount < 0 
+      ? 'text-red-600' 
+      : 'text-green-600';
+  };
+
+  const getTransactionAmount = (amount: number) => {
+    return `${amount < 0 ? '' : '+'}${amount.toLocaleString()} ₽`;
+  };
+
+  const getTransactionDescription = (transaction: Transaction) => {
+    if (transaction.type === 'fill') {
+      return `Заправка ${transaction.fuelType}, ${transaction.liters} л`;
+    } else if (transaction.type === 'payment') {
+      return 'Пополнение счета';
+    } else {
+      return 'Возврат средств';
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-logaz-background pb-16">
+      <Header />
+      
+      <main className="p-4">
+        {/* Card Section */}
+        <section className="mb-6">
+          <FuelCard 
+            cardNumber={cardNumber}
+            balance={balance}
+            company={company}
+            onShowQR={handleShowQR}
+          />
+          <QRCodeModal 
+            isOpen={qrModalOpen}
+            onClose={() => setQrModalOpen(false)}
+            cardNumber={cardNumber.substring(0, 4) + "..." + cardNumber.substring(cardNumber.length - 4)}
+          />
+          
+          <div className="mt-4 flex justify-between gap-4">
+            <Button 
+              className={`flex-1 ${isCardLocked 
+                ? 'bg-logaz-orange hover:bg-logaz-orange/90' 
+                : 'bg-logaz-blue hover:bg-logaz-blue/90'}`}
+              onClick={toggleCardLock}
+            >
+              {isCardLocked 
+                ? <><Unlock size={18} className="mr-2" /> Разблокировать</>
+                : <><Lock size={18} className="mr-2" /> Блокировать</>
+              }
+            </Button>
+            <Button variant="outline" className="flex-1">
+              <Info size={18} className="mr-2" /> Подробности
+            </Button>
+          </div>
+        </section>
+
+        {/* Transactions Section */}
+        <section>
+          <Tabs defaultValue="history" className="w-full">
+            <TabsList className="w-full mb-4">
+              <TabsTrigger value="history" className="flex-1">История</TabsTrigger>
+              <TabsTrigger value="limits" className="flex-1">Лимиты</TabsTrigger>
+              <TabsTrigger value="settings" className="flex-1">Настройки</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="history">
+              <h2 className="text-lg font-medium mb-4">История операций</h2>
+              
+              <div className="space-y-3">
+                {transactions.map(transaction => (
+                  <div key={transaction.id} className="bg-white rounded-lg shadow-sm p-4">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <p className="font-medium">{getTransactionDescription(transaction)}</p>
+                        <p className="text-sm text-gray-600">{transaction.station}</p>
+                        <p className="text-sm text-gray-400">{formatDate(transaction.date)}</p>
+                      </div>
+                      <div className={`font-medium ${getTransactionStatusClass(transaction.amount)}`}>
+                        {getTransactionAmount(transaction.amount)}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="limits">
+              <h2 className="text-lg font-medium mb-4">Лимиты карты</h2>
+              
+              <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
+                <p className="text-sm text-gray-600 mb-1">Суточный лимит</p>
+                <p className="font-medium text-lg">10 000 ₽</p>
+                <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+                  <div 
+                    className="bg-logaz-blue h-2 rounded-full" 
+                    style={{ width: '35%' }}
+                  ></div>
+                </div>
+                <p className="text-sm text-gray-500 mt-1">Использовано 3 500 ₽ из 10 000 ₽</p>
+              </div>
+              
+              <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
+                <p className="text-sm text-gray-600 mb-1">Месячный лимит</p>
+                <p className="font-medium text-lg">100 000 ₽</p>
+                <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+                  <div 
+                    className="bg-logaz-orange h-2 rounded-full" 
+                    style={{ width: '65%' }}
+                  ></div>
+                </div>
+                <p className="text-sm text-gray-500 mt-1">Использовано 65 000 ₽ из 100 000 ₽</p>
+              </div>
+              
+              <Button className="w-full bg-logaz-blue hover:bg-logaz-blue/90 mt-4">
+                Запросить изменение лимитов
+              </Button>
+            </TabsContent>
+            
+            <TabsContent value="settings">
+              <h2 className="text-lg font-medium mb-4">Настройки карты</h2>
+              
+              <div className="bg-white rounded-lg shadow-sm divide-y divide-gray-100">
+                <div className="p-4">
+                  <h3 className="font-medium">Уведомления об операциях</h3>
+                  <p className="text-sm text-gray-600 mt-1">Получать уведомления о всех операциях по карте</p>
+                  <div className="mt-2">
+                    <Button variant="outline" className="mr-2 bg-logaz-blue/5">SMS</Button>
+                    <Button variant="outline" className="mr-2 bg-logaz-blue/5">Email</Button>
+                    <Button variant="outline" className="bg-logaz-orange/10">Push</Button>
+                  </div>
+                </div>
+                
+                <div className="p-4">
+                  <h3 className="font-medium">Отображение в приложении</h3>
+                  <p className="text-sm text-gray-600 mt-1">Настройте как отображается карта в приложении</p>
+                  <Button variant="outline" className="mt-2">Изменить название карты</Button>
+                </div>
+                
+                <div className="p-4">
+                  <h3 className="font-medium text-red-600">Опасная зона</h3>
+                  <p className="text-sm text-gray-600 mt-1">Безвозвратное удаление карты из приложения</p>
+                  <Button variant="destructive" className="mt-2">Удалить карту</Button>
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </section>
+      </main>
+      
+      <BottomNavigation />
+    </div>
+  );
+};
+
+export default CardPage;

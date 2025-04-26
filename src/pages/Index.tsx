@@ -1,11 +1,26 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Logo from '@/components/Logo';
 
 const Index = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Redirect to login page after showing splash screen
+    const timer = setTimeout(() => {
+      navigate('/login');
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [navigate]);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <div className="min-h-screen flex items-center justify-center bg-logaz-background">
+      <div className="text-center animate-pulse-slow">
+        <Logo className="h-16 mb-4 mx-auto" />
+        <h1 className="text-3xl font-bold mb-2">ЛОГАЗ SV</h1>
+        <p className="text-gray-600">Система управления топливными картами</p>
       </div>
     </div>
   );
