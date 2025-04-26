@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -37,7 +38,7 @@ const AuthPage: React.FC = () => {
       <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
         <div className="flex flex-col items-center mb-8">
           <Logo className="h-12 mb-4" />
-          <h1 className="text-2xl font-bold text-logaz-text">Вход в систему</h1>
+          <h1 className="text-2xl font-bold text-logaz-text"></h1>
           <p className="text-gray-500 mt-1">Введите данные для входа</p>
         </div>
 
