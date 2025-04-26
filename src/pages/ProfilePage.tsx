@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Phone } from 'lucide-react';
 import Header from '@/components/Header';
 import BottomNavigation from '@/components/BottomNavigation';
 import { Button } from '@/components/ui/button';
@@ -90,7 +91,16 @@ const ProfilePage: React.FC = () => {
         </section>
         
         {/* Support Phone */}
-        <p className="text-center text-gray-600 my-6">Служба поддержки 8 800 550 8322</p>
+        <div className="flex justify-center items-center text-center text-logaz-blue my-6">
+          <Phone size={18} className="mr-2" />
+          <span>Служба поддержки </span>
+          <a 
+            href="tel:88005508322" 
+            className="ml-1 font-semibold hover:underline"
+          >
+            8 800 550 8322
+          </a>
+        </div>
         
         {/* Logout Button */}
         <Button 
