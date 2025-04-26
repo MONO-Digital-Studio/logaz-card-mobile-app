@@ -5,10 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import Logo from '@/components/Logo';
-import { User } from 'lucide-react';
+import { MessageSquare, Lock, User } from 'lucide-react';
 
 const AuthPage: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [phone] = useState('7 (999) 123-45-67');
+  const [password] = useState('********');
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -64,6 +66,36 @@ const AuthPage: React.FC = () => {
               />
             </div>
           )}
+
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <MessageSquare className="h-5 w-5 text-gray-400" />
+            </div>
+            <Input
+              type="tel"
+              placeholder="Номер телефона"
+              value={phone}
+              onChange={() => {}} // Empty onChange to suppress React warning
+              className="pl-10 bg-gray-100 text-gray-600"
+              disabled
+              readOnly
+            />
+          </div>
+
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Lock className="h-5 w-5 text-gray-400" />
+            </div>
+            <Input
+              type="password"
+              placeholder="Пароль"
+              value={password}
+              onChange={() => {}} // Empty onChange to suppress React warning
+              className="pl-10 bg-gray-100 text-gray-600"
+              disabled
+              readOnly
+            />
+          </div>
 
           <Button
             type="submit"
