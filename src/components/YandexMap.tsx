@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { toast } from 'sonner';
@@ -11,7 +12,7 @@ declare global {
 interface Station {
   id: string;
   coords: [number, number]; // This is a tuple type with exactly 2 numbers
-  type: 'АГЗС' | 'АГНКС' | 'МАЗС';
+  type: string; // Updated to accept any string for flexibility
   fuelTypes: string[];
 }
 

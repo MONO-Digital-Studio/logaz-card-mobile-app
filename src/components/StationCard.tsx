@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 export interface Station {
   id: string;
   name: string;
-  type: 'АГЗС' | 'АГНКС' | 'МАЗС';
+  type: string; // Updated to accept any string for flexibility
   address: string;
   hours: string;
   rating: number;

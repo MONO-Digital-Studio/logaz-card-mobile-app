@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -22,8 +21,8 @@ const MapPage: React.FC = () => {
   const stations: Record<string, Station> = {
     "1": {
       id: "1",
-      name: "АГЗС №7",
-      type: "АГЗС",
+      name: "ЛОГАЗ SV АГЗС №7",
+      type: "ЛОГАЗ SV АГЗС",
       address: "ул. Ленина, 123",
       hours: "24 часа",
       rating: 4.8,
@@ -32,8 +31,8 @@ const MapPage: React.FC = () => {
     },
     "2": {
       id: "2",
-      name: "АГНКС Метан",
-      type: "АГНКС",
+      name: "ЛОГАЗ SV АГНКС",
+      type: "ЛОГАЗ SV АГНКС",
       address: "ул. Гагарина, 45А",
       hours: "06:00 - 22:00",
       rating: 4.5,
@@ -42,8 +41,8 @@ const MapPage: React.FC = () => {
     },
     "3": {
       id: "3",
-      name: "МАЗС №12",
-      type: "МАЗС",
+      name: "ЛОГАЗ SV МАЗС №12",
+      type: "ЛОГАЗ SV МАЗС",
       address: "Проспект Мира, 78",
       hours: "24 часа",
       rating: 4.2,
@@ -52,8 +51,8 @@ const MapPage: React.FC = () => {
     },
     "4": {
       id: "4",
-      name: "АГЗС №3",
-      type: "АГЗС",
+      name: "ЛОГАЗ SV АГЗС №3",
+      type: "ЛОГАЗ SV АГЗС",
       address: "ул. Советская, 14",
       hours: "07:00 - 23:00",
       rating: 4.0,
@@ -62,8 +61,8 @@ const MapPage: React.FC = () => {
     },
     "5": {
       id: "5",
-      name: "АГНКС Центр",
-      type: "АГНКС",
+      name: "ЛОГАЗ SV АГНКС Центр",
+      type: "ЛОГАЗ SV АГНКС",
       address: "ул. Промышленная, 55",
       hours: "06:00 - 22:00",
       rating: 4.6,
@@ -106,19 +105,17 @@ const MapPage: React.FC = () => {
   };
 
   const handleApplyFilters = () => {
-    // Apply selected filters
     setAppliedTypeFilters([...activeTypeFilters]);
     setAppliedFuelFilters([...activeFuelFilters]);
     setFiltersVisible(false);
     
-    // Clear selected station when applying new filters
     setSelectedStationId(null);
   };
 
   const selectedStation = selectedStationId ? stations[selectedStationId] : null;
 
   const fuelFilters = ["Пропан", "Метан", "АИ-92", "АИ-95", "ДТ"];
-  const stationTypeFilters = ["АГЗС", "АГНКС", "МАЗС"];
+  const stationTypeFilters = ["ЛОГАЗ SV АГЗС", "ЛОГАЗ SV АГНКС", "ЛОГАЗ SV МАЗС"];
 
   return (
     <div className="min-h-screen bg-logaz-background">

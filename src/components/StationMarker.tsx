@@ -1,10 +1,8 @@
 
 import React from 'react';
 
-type StationType = 'АГЗС' | 'АГНКС' | 'МАЗС';
-
 interface StationMarkerProps {
-  type: StationType;
+  type: string; // Updated to accept any string for flexibility
   onClick: () => void;
   isActive?: boolean;
 }
@@ -12,8 +10,8 @@ interface StationMarkerProps {
 const StationMarker: React.FC<StationMarkerProps> = ({ type, onClick, isActive = false }) => {
   // Choose color based on station type
   let bgColor = 'bg-logaz-blue';
-  if (type === 'АГЗС') bgColor = 'bg-logaz-orange';
-  if (type === 'АГНКС') bgColor = 'bg-logaz-success';
+  if (type.includes('АГЗС')) bgColor = 'bg-logaz-orange';
+  if (type.includes('АГНКС')) bgColor = 'bg-logaz-success';
 
   return (
     <div 
@@ -26,9 +24,9 @@ const StationMarker: React.FC<StationMarkerProps> = ({ type, onClick, isActive =
         <div className={`absolute -bottom-2 w-0 h-0 
                         border-l-[6px] border-l-transparent 
                         border-r-[6px] border-r-transparent 
-                        ${type === 'АГЗС' 
+                        ${type.includes('АГЗС') 
                           ? 'border-t-[8px] border-t-logaz-orange' 
-                          : type === 'АГНКС'
+                          : type.includes('АГНКС')
                             ? 'border-t-[8px] border-t-logaz-success'
                             : 'border-t-[8px] border-t-logaz-blue'
                         }`}>
