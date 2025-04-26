@@ -11,7 +11,7 @@ declare global {
 
 interface Station {
   id: string;
-  coords: [number, number];
+  coords: [number, number]; // This is a tuple type with exactly 2 numbers
   type: 'АГЗС' | 'АГНКС' | 'МАЗС';
   fuelTypes: string[];
 }
