@@ -7,16 +7,19 @@ import { Button } from '@/components/ui/button';
 import { MapPin, CornerDownLeft, ChevronRight, Clock, Navigation2 } from 'lucide-react';
 import { toast } from 'sonner';
 import YandexMap from '@/components/YandexMap';
+
 interface RouteOption {
   id: string;
   duration: number;
   distance: number;
   stations: number;
 }
+
 interface RoutePoint {
   coords: [number, number];
   name: string;
 }
+
 const RoutesPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const stationIdFromUrl = searchParams.get('station');
@@ -28,6 +31,7 @@ const RoutesPage: React.FC = () => {
     start: RoutePoint;
     end: RoutePoint;
   } | null>(null);
+
   const routeOptions: RouteOption[] = [{
     id: '1',
     duration: 25,
@@ -44,6 +48,7 @@ const RoutesPage: React.FC = () => {
     distance: 10.5,
     stations: 3
   }];
+
   useEffect(() => {
     if (routeCalculated) {
       setRoutePoints({
@@ -58,6 +63,7 @@ const RoutesPage: React.FC = () => {
       });
     }
   }, [routeCalculated, startPoint, endPoint]);
+
   const formatDuration = (minutes: number) => {
     const hours = Math.floor(minutes / 60);
     const min = minutes % 60;
@@ -66,6 +72,7 @@ const RoutesPage: React.FC = () => {
     }
     return `${min} мин`;
   };
+
   const handleCalculateRoute = () => {
     if (!endPoint) {
       toast.error('Пожалуйста, укажите пункт назначения');
@@ -74,10 +81,12 @@ const RoutesPage: React.FC = () => {
     setRouteCalculated(true);
     toast.success('Маршрут построен успешно');
   };
+
   const handleStartRoute = (routeId: string) => {
     setSelectedRoute(routeId);
     toast.success('Навигация запущена');
   };
+
   return <div className="min-h-screen bg-logaz-background pb-16">
       <Header />
       <main className="p-4">
@@ -136,7 +145,7 @@ const RoutesPage: React.FC = () => {
                   
                   <div className="flex items-center justify-between">
                     <div className="bg-logaz-blue/10 rounded-full py-1 text-xs text-logaz-blue px-[8px]">
-                      {route.stations} заправки ЛОГАЗ на маршруте
+                      {route.stations} заправки ЛОГАЗ по пути
                     </div>
                     <Button className="bg-logaz-orange hover:bg-logaz-orange/90" onClick={() => handleStartRoute(route.id)}>
                       <Navigation2 size={16} className="mr-2" /> Начать
@@ -150,4 +159,5 @@ const RoutesPage: React.FC = () => {
       <BottomNavigation />
     </div>;
 };
+
 export default RoutesPage;
