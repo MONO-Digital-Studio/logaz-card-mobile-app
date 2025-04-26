@@ -5,10 +5,7 @@ import Header from '@/components/Header';
 import BottomNavigation from '@/components/BottomNavigation';
 import FuelCard from '@/components/FuelCard';
 import QRCodeModal from '@/components/QRCodeModal';
-import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Lock, Unlock, Info } from 'lucide-react';
-import { toast } from "sonner";
 
 interface Transaction {
   id: string;
@@ -22,7 +19,6 @@ interface Transaction {
 
 const CardPage: React.FC = () => {
   const [qrModalOpen, setQrModalOpen] = useState(false);
-  const [isCardLocked, setIsCardLocked] = useState(false);
   
   const cardNumber = "5678 1234 9012 3456";
   const balance = 15750;
@@ -78,39 +74,6 @@ const CardPage: React.FC = () => {
     setQrModalOpen(true);
   };
 
-  const toggleCardLock = () => {
-    const newLockedState = !isCardLocked;
-    setIsCardLocked(newLockedState);
-    toast.success(newLockedState 
-      ? 'Карта успешно заблокирована' 
-      : 'Карта успешно разблокирована'
-    );
-  };
-
-  const formatDate = (date: Date) => {
-    return format(date, 'dd MMM yyyy, HH:mm', { locale: ru });
-  };
-
-  const getTransactionStatusClass = (amount: number) => {
-    return amount < 0 
-      ? 'text-red-600' 
-      : 'text-green-600';
-  };
-
-  const getTransactionAmount = (amount: number) => {
-    return `${amount < 0 ? '' : '+'}${amount.toLocaleString()} ₽`;
-  };
-
-  const getTransactionDescription = (transaction: Transaction) => {
-    if (transaction.type === 'fill') {
-      return `Заправка ${transaction.fuelType}, ${transaction.liters} л`;
-    } else if (transaction.type === 'payment') {
-      return 'Пополнение счета';
-    } else {
-      return 'Возврат средств';
-    }
-  };
-
   return (
     <div className="min-h-screen bg-logaz-background pb-16">
       <Header />
@@ -128,19 +91,6 @@ const CardPage: React.FC = () => {
             onClose={() => setQrModalOpen(false)}
             cardNumber={cardNumber.substring(0, 4) + "..." + cardNumber.substring(cardNumber.length - 4)}
           />
-          
-          <div className="mt-4 flex items-center">
-            <div 
-              className={`flex-1 p-3 rounded-lg text-center ${isCardLocked 
-                ? 'bg-logaz-orange/10 text-logaz-orange' 
-                : 'bg-logaz-blue/10 text-logaz-blue'}`}
-              onClick={toggleCardLock}
-            >
-              {isCardLocked 
-                ? 'Разблокировать карту' 
-                : 'Заблокировать карту'}
-            </div>
-          </div>
         </section>
 
         <section>
