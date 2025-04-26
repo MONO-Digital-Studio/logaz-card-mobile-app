@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { MapPin, Clock, Star, Fuel, Route } from "lucide-react";
@@ -77,7 +76,7 @@ const StationCard = ({ station, onRouteClick }: StationCardProps) => {
         </Button>
         <Button 
           variant="outline"
-          className="flex-1 bg-logaz-blue text-white hover:bg-logaz-blue/90" 
+          className="flex-1 bg-logaz-blue text-white hover:bg-logaz-blue/90 hover:text-white" 
           onClick={handleRouteClick}
         >
           <Route className="w-4 h-4" />
