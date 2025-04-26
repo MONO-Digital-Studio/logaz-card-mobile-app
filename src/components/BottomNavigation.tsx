@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Home, Bell, CreditCard, Route, User } from 'lucide-react';
@@ -6,7 +7,7 @@ const BottomNavigation: React.FC = () => {
   const location = useLocation();
 
   const navItems = [
-    { path: '/', icon: Home, label: 'Главная' },
+    { path: '/home', icon: Home, label: 'Главная' },
     { path: '/notifications', icon: Bell, label: 'Сообщения' },
     { path: '/card', icon: CreditCard, label: 'Карта' },
     { path: '/routes', icon: Route, label: 'Маршруты' },
