@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Header from '@/components/Header';
 import BottomNavigation from '@/components/BottomNavigation';
-import MapPlaceholder from '@/components/MapPlaceholder';
+import YandexMap from '@/components/YandexMap';
 import StationCard, { Station } from '@/components/StationCard';
 import { Filter, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -96,7 +96,7 @@ const MapPage: React.FC = () => {
       <main className="relative h-[calc(100vh-130px)]">
         {/* Map Container */}
         <div className="h-full">
-          <MapPlaceholder onStationClick={handleStationClick} />
+          <YandexMap />
         </div>
         
         {/* Filter Button */}
