@@ -7,26 +7,19 @@ interface FuelCardProps {
   balance: number;
   company: string;
   onShowQR: () => void;
-  onClick?: () => void;
 }
 
 const FuelCard: React.FC<FuelCardProps> = ({ 
   cardNumber, 
   balance, 
   company, 
-  onShowQR, 
-  onClick
+  onShowQR
 }) => {
   const formattedCardNumber = cardNumber.replace(/(\d{4})/g, '$1 ').trim();
 
-  const handleQRClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Остановит всплытие события, чтобы не сработал onClick карты
-    onShowQR();
-  };
-
   return (
     <div 
-      onClick={onClick}
+      onClick={onShowQR}
       className={`relative bg-gradient-to-r from-logaz-blue to-logaz-blue/80 rounded-xl p-4 text-white shadow-lg cursor-pointer`}
     >
       {/* Card Background Pattern */}
@@ -41,12 +34,6 @@ const FuelCard: React.FC<FuelCardProps> = ({
             <h3 className="text-sm font-light opacity-90">Топливная карта</h3>
             <p className="text-xl font-medium mt-1">{formattedCardNumber}</p>
           </div>
-          <button 
-            onClick={handleQRClick}
-            className="w-12 h-12 flex items-center justify-center bg-white/20 hover:bg-white/30 rounded-lg transition-colors"
-          >
-            <QrCode size={24} />
-          </button>
         </div>
         
         <div className="mt-4">
