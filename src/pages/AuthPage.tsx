@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -19,25 +18,19 @@ const AuthPage: React.FC = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      if (isLogin) {
-        if (phone && password) {
-          toast.success('Вы успешно вошли в систему');
-          navigate('/home');
-        } else {
-          toast.error('Пожалуйста, заполните все поля');
-        }
+    // Test login - immediately navigate to home
+    if (isLogin) {
+      toast.success('Вы успешно вошли в систему');
+      navigate('/home');
+    } else {
+      if (name && phone && password) {
+        toast.success('Регистрация успешно завершена');
+        setIsLogin(true);
       } else {
-        if (name && phone && password) {
-          toast.success('Регистрация успешно завершена');
-          setIsLogin(true);
-        } else {
-          toast.error('Пожалуйста, заполните все поля');
-        }
+        toast.error('Пожалуйста, заполните все поля');
       }
-      setIsLoading(false);
-    }, 1000);
+    }
+    setIsLoading(false);
   };
 
   const handleTelegramLogin = () => {
