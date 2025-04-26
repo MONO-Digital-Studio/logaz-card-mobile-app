@@ -11,7 +11,7 @@ const YandexMap = ({ onStationClick }: { onStationClick?: (id: string) => void }
   useEffect(() => {
     // Load Yandex Maps script
     const script = document.createElement('script');
-    script.src = 'https://api-maps.yandex.ru/2.1/?apikey=YOUR_API_KEY&lang=ru_RU';
+    script.src = 'https://api-maps.yandex.ru/2.1/?apikey=589e2c90-1f8a-4740-a5c3-8a3423c9897c&lang=ru_RU';
     script.async = true;
     script.onload = () => {
       window.ymaps.ready(() => {
@@ -21,7 +21,29 @@ const YandexMap = ({ onStationClick }: { onStationClick?: (id: string) => void }
           controls: ['zoomControl', 'geolocationControl']
         });
 
-        // Add your markers and other map functionality here
+        // Добавляем маркеры станций
+        const stations = [
+          { id: "1", coords: [55.751574, 37.573856] },
+          { id: "2", coords: [55.752, 37.574] },
+          { id: "3", coords: [55.753, 37.575] },
+          { id: "4", coords: [55.754, 37.576] },
+          { id: "5", coords: [55.755, 37.577] }
+        ];
+
+        stations.forEach(station => {
+          const marker = new window.ymaps.Placemark(station.coords, {}, {
+            iconLayout: 'default#image',
+            iconImageHref: '/path/to/marker-icon.png', // Замените на реальный путь к иконке
+            iconImageSize: [30, 42],
+            iconImageOffset: [-15, -42]
+          });
+
+          marker.events.add('click', () => {
+            onStationClick && onStationClick(station.id);
+          });
+
+          map.geoObjects.add(marker);
+        });
       });
     };
     document.head.appendChild(script);
@@ -30,7 +52,7 @@ const YandexMap = ({ onStationClick }: { onStationClick?: (id: string) => void }
       // Cleanup
       document.head.removeChild(script);
     };
-  }, []);
+  }, [onStationClick]);
 
   return (
     <div id="map" className="w-full h-full" />
