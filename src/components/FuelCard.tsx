@@ -28,7 +28,7 @@ const FuelCard: React.FC<FuelCardProps> = ({ cardNumber, balance, company, onSho
           </div>
           <button 
             onClick={onShowQR}
-            className="bg-white/20 hover:bg-white/30 rounded-lg p-2"
+            className="w-12 h-12 flex items-center justify-center bg-white/20 hover:bg-white/30 rounded-lg transition-colors"
           >
             <QrCode size={24} />
           </button>
